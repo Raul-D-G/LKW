@@ -2,8 +2,17 @@
   <dictionary name="Raul">
     <words>
       <w>adresa</w>
+      <w>angajat</w>
+      <w>garaj</w>
       <w>iban</w>
+      <w>numar</w>
       <w>nume</w>
+      <w>piesa</w>
+      <w>piese</w>
+      <w>pret</w>
+      <w>rute</w>
+      <w>salariu</w>
+      <w>vechime</w>
     </words>
   </dictionary>
 </component>
