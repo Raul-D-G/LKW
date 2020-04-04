@@ -19,6 +19,8 @@ public abstract class Angajat {
         System.out.println("Angajatul " + nume + " a fost concediat");
     }
 
+    public abstract int calculSalariu();
+
     public String getNume() {
         return nume;
     }

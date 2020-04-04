@@ -1,6 +1,5 @@
 package Ruta;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public class Cursa {
@@ -81,10 +80,10 @@ public class Cursa {
     @Override
     public String toString() {
         return "Cursa{" +
-                "tara_incarcare='" + tara_incarcare + '\'' +
-                ", oras_incarcare='" + oras_incarcare + '\'' +
-                ", tara_descarcare='" + tara_descarcare + '\'' +
-                ", oras_descarcare='" + oras_descarcare + '\'' +
+                "Tara incarcare='" + tara_incarcare + '\'' +
+                ", oras incarcare='" + oras_incarcare + '\'' +
+                ", tara descarcare='" + tara_descarcare + '\'' +
+                ", oras descarcare='" + oras_descarcare + '\'' +
                 ", km=" + km +
                 ", pret=" + pret +
                 '}';

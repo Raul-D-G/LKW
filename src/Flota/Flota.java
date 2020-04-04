@@ -3,13 +3,14 @@ package Flota;
 import Angajati.Sofer;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Flota {
 
-    private Camion[] camioane;
-    private Sofer[] soferi;
+    private List<Camion> camioane;
+    private List<Sofer> soferi;
 
-    public Flota(Camion[] camioane, Sofer[] soferi) {
+    public Flota(List<Camion> camioane, List<Sofer> soferi) {
         this.camioane = camioane;
         this.soferi = soferi;
     }
@@ -19,27 +20,27 @@ public class Flota {
         this.soferi = flota.soferi;
     }
 
-    public Camion[] getCamioane() {
+    public List<Camion> getCamioane() {
         return camioane;
     }
 
-    public void setCamioane(Camion[] camioane) {
-        this.camioane = camioane;
-    }
-
-    public Sofer[] getSoferi() {
+    public List<Sofer> getSoferi() {
         return soferi;
     }
 
-    public void setSoferi(Sofer[] soferi) {
-        this.soferi = soferi;
+    public void adaugaCamion(Camion camion) {
+        camioane.add(camion);
+    }
+
+    public void adaugaSofer(Sofer sofer) {
+        soferi.add(sofer);
     }
 
     @Override
     public String toString() {
-        return "Flota{" +
-                "camioane=" + Arrays.toString(camioane) +
-                ", soferi=" + Arrays.toString(soferi) +
+        return "Flota{\n" +
+                "camioane=" + Arrays.toString(camioane.toArray()) +
+                "\nsoferi=" + Arrays.toString(soferi.toArray()) +
                 '}';
     }
 }

@@ -18,6 +18,13 @@ public class Mecanic extends Angajat {
     }
 
     @Override
+    public int calculSalariu() {
+        int salariu_nou =  salariu_mecanic + getVechime() * 10;
+        setSalariu_mecanic(salariu_nou);
+        return salariu_nou;
+    }
+
+    @Override
     public String toString() {
         return super.toString() +  " salariu_mecanic=" + salariu_mecanic + "}";
     }

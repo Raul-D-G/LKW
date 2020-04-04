@@ -34,6 +34,6 @@ public class Piesa {
                 "nume='" + nume + '\'' +
                 ", pret=" + pret +
                 ", numar_de_piese=" + numar_de_piese +
-                '}';
+                "}";
     }
 }

@@ -7,36 +7,54 @@ import Ruta.Cursa;
 import Flota.Camion;
 import Angajati.Sofer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
 
-        Piesa piesa = new Piesa("Disc frana", 500,1);
-        Piesa piesa1 = new Piesa("Cauciuc",1000,5);
-        Piesa[] piese = {piesa, piesa1};
+        Mecanic m1 = new Mecanic("Marin",10,true,3000);
+        Mecanic m2 = new Mecanic("Gabi",5,true,2500);
+        List<Mecanic> mecanici = new ArrayList<>();
 
-        Mecanic m1 = new Mecanic("Marin",10,true,1000);
-        Mecanic m2 = new Mecanic("Gabi",5,true,500);
-        Mecanic[] mecanici = {m1, m2};
+        Piesa piesa1 = new Piesa("Disc frana", 500,1);
+        Piesa piesa2 = new Piesa("Cauciuc",1000,5);
+        List<Piesa> piese = new ArrayList<Piesa>();
 
-        Garaj garaj = new Garaj(piese, mecanici);
+        Garaj garaj = new Garaj(piese, mecanici, 0);
+        garaj.adaugaMecanic(m1); garaj.adaugaMecanic(m2); garaj.adaugaPiesa(piesa1); garaj.adaugaPiesa(piesa2);
 
-        Cursa c1 = new Cursa("Romania", "Bucuresti", "Grecia", "Athena", 1556, 1450);
-        Cursa[] curse = {c1};
-
-        Ruta r1 = new Ruta("Romania","Grecia", curse);
-        Ruta[] rute = {r1};
-
-        Camion camion1 = new Camion("GJ-20-KYS", "Volvo", true);
-        Camion[] camioane = {camion1};
 
         Sofer sof1 = new Sofer("Cristi", 10,true,3500);
-        Sofer[] soferi = {sof1};
+        Sofer sof2 = new Sofer("Florin" ,5,true,3000);
+        List<Sofer> soferi = new ArrayList<>();
+
+        Camion camion1 = new Camion("GJ-20-KYS", "Volvo", true);
+        Camion camion2 = new Camion("GJ-50-KYS", "Volvo", true);
+        List<Camion> camioane = new ArrayList<Camion>();
 
         Flota flota = new Flota(camioane, soferi);
+        flota.adaugaCamion(camion1); flota.adaugaCamion(camion2); flota.adaugaSofer(sof1); flota.adaugaSofer(sof2);
 
-        Companie COMP = new Companie("Iurom Impex","Romania Gorj",88556,71360, garaj, rute, flota);
+        Cursa cursa1 = new Cursa("Romania", "Bucuresti", "Grecia", "Athena", 1556, 1450);
+        Cursa cursa2 = new Cursa("Grecia", "Patra", "Romania", "Baia Mare", 1789, 1500);
+        List<Cursa> curse_ruta1 = new ArrayList<Cursa>();
+        List<Cursa> curse_ruta2 = new ArrayList<Cursa>();
 
-        System.out.println(COMP.toString());
+
+        Ruta ruta1 = new Ruta("Romania","Grecia", curse_ruta1);
+        Ruta ruta2 = new Ruta("Grecia", "Romania", curse_ruta2);
+        ruta1.adaugaCursa(cursa1);
+        ruta2.adaugaCursa(cursa2);
+
+        List<Ruta> rute = new ArrayList<Ruta>();
+
+        Companie comp = new Companie("Iurom Impex","Romania Gorj",88556,71360, garaj, rute, flota);
+
+        comp.adaugaRuta(ruta1);
+        comp.adaugaRuta(ruta2);
+
+        System.out.println(comp.toString());
 
     }
 }
