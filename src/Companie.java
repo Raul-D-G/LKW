@@ -2,6 +2,8 @@ import Flota.Flota;
 import Garaj.Garaj;
 import Ruta.Ruta;
 
+import java.util.Arrays;
+
 public class Companie {
 
     private String nume;
@@ -19,9 +21,22 @@ public class Companie {
         this.adresa = adresa;
         this.cui = cui;
         this.IBAN = IBAN;
-        this.garaj = garaj;
-        this.rute = rute;
-        this.flota = flota;
+        this.garaj = new Garaj(garaj);
+        this.rute = Arrays.copyOf(rute, rute.length);
+        this.flota = new Flota(flota);
     }
 
+
+    @Override
+    public String toString() {
+        return "Companie{" +
+                "nume='" + nume + '\'' +
+                ", adresa='" + adresa + '\'' +
+                ", cui=" + cui +
+                ", IBAN=" + IBAN +
+                ",\n" + garaj +
+                ",\n" + Arrays.toString(rute) +
+                ",\n" + flota +
+                '}';
+    }
 }

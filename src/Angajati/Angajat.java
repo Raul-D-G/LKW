@@ -1,16 +1,16 @@
 package Angajati;
 
-public class Angajat {
+public abstract class Angajat {
 
     private String nume;
     private int vechime;
-    private int salariu;
+    private boolean disponibil;
     private static int numar_angajati = 0;
 
-    public Angajat(String nume, int vechime, int salariu) {
+    public Angajat(String nume, int vechime, boolean disponibil) {
         this.nume = nume;
         this.vechime = vechime;
-        this.salariu = salariu;
+        this.disponibil = disponibil;
         ++numar_angajati;
     }
 
@@ -27,8 +27,20 @@ public class Angajat {
         return vechime;
     }
 
-    public int getSalariu() {
-        return salariu;
+    public boolean isDisponibil() {
+        return disponibil;
     }
 
+    public void setDisponibil(boolean disponibil) {
+        this.disponibil = disponibil;
+    }
+
+    @Override
+    public String toString() {
+        return "Angajat{" +
+                "nume='" + nume + '\'' +
+                ", vechime=" + vechime +
+                ", disponibil=" + disponibil +
+                ',';
+    }
 }
