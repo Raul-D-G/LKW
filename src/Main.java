@@ -8,6 +8,8 @@ import Flota.Camion;
 import Angajati.Sofer;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -37,6 +39,7 @@ public class Main {
         flota.adaugaCamion(camion1); flota.adaugaCamion(camion2); flota.adaugaSofer(sof1); flota.adaugaSofer(sof2);
 
         Cursa cursa1 = new Cursa(1, "Romania", "Bucuresti", "Grecia", "Athena", 1556, 1450);
+        Cursa cursa12 = new Cursa(3,"Romania", "Timisoara", "Grecia", "Volos", 1150,950);
         Cursa cursa2 = new Cursa(2, "Grecia", "Patra", "Romania", "Baia Mare", 1789, 1500);
         List<Cursa> curse_ruta1 = new ArrayList<Cursa>();
         List<Cursa> curse_ruta2 = new ArrayList<Cursa>();
@@ -44,6 +47,7 @@ public class Main {
 
         Ruta ruta1 = new Ruta("Romania","Grecia", curse_ruta1);
         Ruta ruta2 = new Ruta("Grecia", "Romania", curse_ruta2);
+        ruta1.adaugaCursa(cursa12);
         ruta1.adaugaCursa(cursa1);
         ruta2.adaugaCursa(cursa2);
 
@@ -56,6 +60,11 @@ public class Main {
 
 
         //System.out.println(comp.toString());
+
+//        System.out.println(ruta1.getCurse());
+
+        ruta1.getCurse().sort(new SortCurse());
+//        System.out.println(ruta1.getCurse());
 
         comp.cautaCurse(ruta1);
         comp.cautaCamionDisponibil();
