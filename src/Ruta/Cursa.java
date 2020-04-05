@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Cursa {
 
+    private int id;
     private String tara_incarcare;
     private String oras_incarcare;
     private String tara_descarcare;
@@ -11,7 +12,8 @@ public class Cursa {
     private int km;
     private int pret;
 
-    public Cursa(String tara_incarcare, String oras_incarcare, String tara_descarcare, String oras_descarcare, int km, int pret) {
+    public Cursa(int id, String tara_incarcare, String oras_incarcare, String tara_descarcare, String oras_descarcare, int km, int pret) {
+        this.id = id;
         this.tara_incarcare = tara_incarcare;
         this.oras_incarcare = oras_incarcare;
         this.tara_descarcare = tara_descarcare;
@@ -21,12 +23,17 @@ public class Cursa {
     }
 
     public Cursa(@NotNull Cursa cursa) {
+        this.id = cursa.id;
         this.tara_incarcare = cursa.tara_incarcare;
         this.oras_incarcare = cursa.oras_incarcare;
         this.tara_descarcare = cursa.tara_descarcare;
         this.oras_descarcare = cursa.oras_descarcare;
         this.pret = cursa.pret;
         this.km = cursa.km;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getTara_incarcare() {
@@ -80,10 +87,11 @@ public class Cursa {
     @Override
     public String toString() {
         return "Cursa{" +
-                "Tara incarcare='" + tara_incarcare + '\'' +
-                ", oras incarcare='" + oras_incarcare + '\'' +
-                ", tara descarcare='" + tara_descarcare + '\'' +
-                ", oras descarcare='" + oras_descarcare + '\'' +
+                "id=" + id +
+                ", tara_incarcare='" + tara_incarcare + '\'' +
+                ", oras_incarcare='" + oras_incarcare + '\'' +
+                ", tara_descarcare='" + tara_descarcare + '\'' +
+                ", oras_descarcare='" + oras_descarcare + '\'' +
                 ", km=" + km +
                 ", pret=" + pret +
                 '}';

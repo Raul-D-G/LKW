@@ -29,15 +29,15 @@ public class Main {
         Sofer sof2 = new Sofer("Florin" ,5,true,3000);
         List<Sofer> soferi = new ArrayList<>();
 
-        Camion camion1 = new Camion("GJ-20-KYS", "Volvo", true);
-        Camion camion2 = new Camion("GJ-50-KYS", "Volvo", true);
+        Camion camion1 = new Camion("GJ-20-KYS", "Volvo", true, 0.35);
+        Camion camion2 = new Camion("GJ-50-KYS", "Volvo", true, 0.3);
         List<Camion> camioane = new ArrayList<Camion>();
 
         Flota flota = new Flota(camioane, soferi);
         flota.adaugaCamion(camion1); flota.adaugaCamion(camion2); flota.adaugaSofer(sof1); flota.adaugaSofer(sof2);
 
-        Cursa cursa1 = new Cursa("Romania", "Bucuresti", "Grecia", "Athena", 1556, 1450);
-        Cursa cursa2 = new Cursa("Grecia", "Patra", "Romania", "Baia Mare", 1789, 1500);
+        Cursa cursa1 = new Cursa(1, "Romania", "Bucuresti", "Grecia", "Athena", 1556, 1450);
+        Cursa cursa2 = new Cursa(2, "Grecia", "Patra", "Romania", "Baia Mare", 1789, 1500);
         List<Cursa> curse_ruta1 = new ArrayList<Cursa>();
         List<Cursa> curse_ruta2 = new ArrayList<Cursa>();
 
@@ -54,7 +54,24 @@ public class Main {
         comp.adaugaRuta(ruta1);
         comp.adaugaRuta(ruta2);
 
-        System.out.println(comp.toString());
+
+        //System.out.println(comp.toString());
+
+        comp.cautaCurse(ruta1);
+        comp.cautaCamionDisponibil();
+
+        Cursa cursaDorita = comp.selectCursa(ruta1, 1);
+        Camion camionDorit = comp.selectCamion("GJ-20-KYS");
+
+        double profit =  comp.acceptaCursa(ruta1, cursaDorita, camionDorit);
+        System.out.printf("In urma cursei : %s - > %s efectuata cu camionul %s s-a obtinu un profit de %s%n",
+                cursaDorita.getTara_incarcare(),
+                cursaDorita.getTara_descarcare(),
+                camionDorit.getNumar_imatriculare(),
+                profit);
+
+        comp.cautaCamionDisponibil();
+        comp.cautaCurse(ruta1);
 
     }
 }

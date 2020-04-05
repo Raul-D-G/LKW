@@ -36,6 +36,14 @@ public class Flota {
         soferi.add(sofer);
     }
 
+    public int celtuieliSoferi() {
+        int cheltuieli = 0;
+        for (Sofer sofer : soferi) {
+            cheltuieli += sofer.calculSalariu();
+        }
+        return cheltuieli;
+    }
+
     @Override
     public String toString() {
         return "Flota{\n" +

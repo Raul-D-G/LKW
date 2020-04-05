@@ -15,8 +15,16 @@ public class Ruta {
         this.curse = curse;
     }
 
+    public List<Cursa> getCurse() {
+        return curse;
+    }
+
     public void adaugaCursa(Cursa cursa) {
         curse.add(cursa);
+    }
+
+    public void stergeCursa(Cursa cursa) {
+        curse.remove(cursa);
     }
 
     @Override

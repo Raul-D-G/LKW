@@ -5,11 +5,13 @@ public class Camion {
     private String numar_imatriculare;
     private String marca;
     private boolean disponibil;
+    private double consum_pe_km;
 
-    public Camion(String numar_imatriculare, String marca, boolean disponibil) {
+    public Camion(String numar_imatriculare, String marca, boolean disponibil, double consum_pe_km) {
         this.numar_imatriculare = numar_imatriculare;
         this.marca = marca;
         this.disponibil = disponibil;
+        this.consum_pe_km = consum_pe_km;
     }
 
     public String getNumar_imatriculare() {
@@ -43,5 +45,9 @@ public class Camion {
                 ", marca='" + marca + '\'' +
                 ", disponibil=" + disponibil +
                 '}';
+    }
+
+    public double getConsum_pe_km() {
+        return consum_pe_km;
     }
 }

@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Raul">
     <words>
+      <w>accepta</w>
       <w>adauga</w>
       <w>adresa</w>
       <w>angajat</w>
@@ -9,16 +10,21 @@
       <w>calcul</w>
       <w>camioane</w>
       <w>camion</w>
+      <w>castig</w>
+      <w>cauta</w>
       <w>cheltuieli</w>
       <w>companie</w>
       <w>concediat</w>
       <w>concediere</w>
+      <w>consum</w>
       <w>cursa</w>
       <w>descarcare</w>
       <w>disponibil</w>
+      <w>dorit</w>
       <w>flota</w>
       <w>fost</w>
       <w>garaj</w>
+      <w>garajplus</w>
       <w>iban</w>
       <w>imatriculare</w>
       <w>incarcare</w>
@@ -36,6 +42,7 @@
       <w>salariu</w>
       <w>sofer</w>
       <w>soferi</w>
+      <w>sterge</w>
       <w>vechime</w>
     </words>
   </dictionary>
