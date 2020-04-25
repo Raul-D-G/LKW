@@ -64,21 +64,25 @@ public class Main {
         ruta1.getCurse().sort(new SortCurse());
 //        System.out.println(ruta1.getCurse());
 
-        comp.cautaCurse(ruta1);
-        comp.cautaCamionDisponibil();
+//        comp.cautaCurse(ruta1);
+//        comp.cautaCamionDisponibil();
+//
+//        Cursa cursaDorita = comp.selectCursa(ruta1, 1);
+//        Camion camionDorit = comp.selectCamion("GJ-20-KYS");
+//
+//        double profit =  comp.acceptaCursa(ruta1, cursaDorita, camionDorit);
+//        System.out.printf("In urma cursei : %s - > %s efectuata cu camionul %s s-a obtinu un profit de %s%n",
+//                cursaDorita.getTara_incarcare(),
+//                cursaDorita.getTara_descarcare(),
+//                camionDorit.getNumarImatriculare(),
+//                profit);
+//
+//        comp.cautaCamionDisponibil();
+//        comp.cautaCurse(ruta1);
 
-        Cursa cursaDorita = comp.selectCursa(ruta1, 1);
-        Camion camionDorit = comp.selectCamion("GJ-20-KYS");
 
-        double profit =  comp.acceptaCursa(ruta1, cursaDorita, camionDorit);
-        System.out.printf("In urma cursei : %s - > %s efectuata cu camionul %s s-a obtinu un profit de %s%n",
-                cursaDorita.getTara_incarcare(),
-                cursaDorita.getTara_descarcare(),
-                camionDorit.getNumarImatriculare(),
-                profit);
 
-        comp.cautaCamionDisponibil();
-        comp.cautaCurse(ruta1);
+
 
     }
 }
