@@ -44,7 +44,7 @@ public class Garaj {
         int cheltuieli = 0;
         for (Mecanic mecanic: mecanici) {
             mecanic.calculSalariu();
-            cheltuieli += mecanic.getSalariu_mecanic();
+            cheltuieli += mecanic.getSalariuMecanic();
         }
         for (Piesa piesa : piese) {
             cheltuieli += piesa.getPret();

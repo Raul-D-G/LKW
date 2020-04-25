@@ -2,31 +2,31 @@ package Angajati;
 
 public class Sofer extends Angajat {
 
-    private int salariu_sofer;
+    private int salariuSofer;
 
 
     public Sofer(String nume, int vechime, boolean disponibil, int salariu) {
         super(nume, vechime, disponibil);
-        this.salariu_sofer = salariu;
+        this.salariuSofer = salariu;
     }
 
-    public int getSalariu_sofer() {
-        return salariu_sofer;
+    public int getSalariuSofer() {
+        return salariuSofer;
     }
 
-    public void setSalariu_sofer(int salariu_sofer) {
-        this.salariu_sofer = salariu_sofer;
+    public void setSalariuSofer(int salariuSofer) {
+        this.salariuSofer = salariuSofer;
     }
 
     @Override
     public int calculSalariu() {
-        int salariu_nou =  (int) (salariu_sofer + getVechime() * 5.5);
-        setSalariu_sofer(salariu_nou);
+        int salariu_nou =  (int) (salariuSofer + getVechime() * 5.5);
+        setSalariuSofer(salariu_nou);
         return salariu_nou;
     }
 
     @Override
     public String toString() {
-        return super.toString() +  " salariu_sofer=" + salariu_sofer + "}";
+        return super.toString() +  " salariu sofer=" + salariuSofer + "}";
     }
 }

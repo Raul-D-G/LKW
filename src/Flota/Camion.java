@@ -2,24 +2,24 @@ package Flota;
 
 public class Camion {
 
-    private String numar_imatriculare;
+    private String numarImatriculare;
     private String marca;
     private boolean disponibil;
-    private double consum_pe_km;
+    private double consumPeKm;
 
-    public Camion(String numar_imatriculare, String marca, boolean disponibil, double consum_pe_km) {
-        this.numar_imatriculare = numar_imatriculare;
+    public Camion(String numarImatriculare, String marca, boolean disponibil, double consumPeKm) {
+        this.numarImatriculare = numarImatriculare;
         this.marca = marca;
         this.disponibil = disponibil;
-        this.consum_pe_km = consum_pe_km;
+        this.consumPeKm = consumPeKm;
     }
 
-    public String getNumar_imatriculare() {
-        return numar_imatriculare;
+    public String getNumarImatriculare() {
+        return numarImatriculare;
     }
 
-    public void setNumar_imatriculare(String numar_imatriculare) {
-        this.numar_imatriculare = numar_imatriculare;
+    public void setNumarImatriculare(String numarImatriculare) {
+        this.numarImatriculare = numarImatriculare;
     }
 
     public String getMarca() {
@@ -41,13 +41,13 @@ public class Camion {
     @Override
     public String toString() {
         return "Camion{" +
-                "numar_imatriculare='" + numar_imatriculare + '\'' +
+                "numar_imatriculare='" + numarImatriculare + '\'' +
                 ", marca='" + marca + '\'' +
                 ", disponibil=" + disponibil +
                 '}';
     }
 
-    public double getConsum_pe_km() {
-        return consum_pe_km;
+    public double getConsumPeKm() {
+        return consumPeKm;
     }
 }

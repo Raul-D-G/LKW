@@ -8,8 +8,6 @@ import Flota.Camion;
 import Angajati.Sofer;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -76,7 +74,7 @@ public class Main {
         System.out.printf("In urma cursei : %s - > %s efectuata cu camionul %s s-a obtinu un profit de %s%n",
                 cursaDorita.getTara_incarcare(),
                 cursaDorita.getTara_descarcare(),
-                camionDorit.getNumar_imatriculare(),
+                camionDorit.getNumarImatriculare(),
                 profit);
 
         comp.cautaCamionDisponibil();

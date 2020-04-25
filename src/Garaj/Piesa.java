@@ -4,12 +4,12 @@ public class Piesa {
 
     private String nume;
     private int pret;
-    private int numar_de_piese;
+    private int numarDePiese;
 
-    public Piesa(String nume, int pret, int numar_de_piese) {
+    public Piesa(String nume, int pret, int numarDePiese) {
         this.nume = nume;
         this.pret = pret;
-        this.numar_de_piese = numar_de_piese;
+        this.numarDePiese = numarDePiese;
     }
 
     public int getPret() {
@@ -20,12 +20,12 @@ public class Piesa {
         this.pret = pret;
     }
 
-    public int getNumar_de_piese() {
-        return numar_de_piese;
+    public int getNumarDePiese() {
+        return numarDePiese;
     }
 
-    public void setNumar_de_piese(int numar_de_piese) {
-        this.numar_de_piese = numar_de_piese;
+    public void setNumarDePiese(int numarDePiese) {
+        this.numarDePiese = numarDePiese;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Piesa {
         return "Piesa{" +
                 "nume='" + nume + '\'' +
                 ", pret=" + pret +
-                ", numar_de_piese=" + numar_de_piese +
+                ", numar_de_piese=" + numarDePiese +
                 "}";
     }
 }

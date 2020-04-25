@@ -80,7 +80,7 @@ public class Companie {
 //    Returneaza camionul selectat
     public Camion selectCamion(String nr) {
         for (Camion camion : flota.getCamioane()) {
-            if (camion.getNumar_imatriculare().equals(nr))
+            if (camion.getNumarImatriculare().equals(nr))
                 return camion;
         }
         return null;
@@ -90,7 +90,7 @@ public class Companie {
 //    returneaza profitul asociat cursei (scazand din pretul cursei consumul camionului * nr km)
     public double acceptaCursa(@NotNull Ruta ruta, @NotNull Cursa cursa, @NotNull Camion camion) {
         camion.setDisponibil(false);
-        double cheltuieli = camion.getConsum_pe_km() * cursa.getKm();
+        double cheltuieli = camion.getConsumPeKm() * cursa.getKm();
         double castig;
         castig = cursa.getPret();
 

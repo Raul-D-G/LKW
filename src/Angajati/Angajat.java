@@ -5,22 +5,22 @@ public abstract class Angajat {
     private String nume;
     private int vechime;
     private boolean disponibil;
-    private static int numar_angajati = 0;
+    private static int numarAngajati = 0;
 
     public Angajat(String nume, int vechime, boolean disponibil) {
         this.nume = nume;
         this.vechime = vechime;
         this.disponibil = disponibil;
-        ++numar_angajati;
+        ++numarAngajati;
     }
 
     protected void concediere() {
-        --numar_angajati;
+        --numarAngajati;
         System.out.println("Angajatul " + nume + " a fost concediat");
     }
 
     public static int nrAngajati() {
-        return numar_angajati;
+        return numarAngajati;
     }
 
     public abstract int calculSalariu();
