@@ -1,3 +1,4 @@
+import Angajati.Angajat;
 import Flota.Flota;
 import Garaj.Garaj;
 import Ruta.Ruta;
@@ -17,22 +18,26 @@ public class Companie {
 
     private Garaj garaj;
     private List<Ruta> rute;
+    private List<Angajat> angajati;
     private Flota flota;
 
 
-    public Companie(String nume, String adresa, int cui, int IBAN, Garaj garaj, List<Ruta> rute, Flota flota) {
+    public Companie(String nume, String adresa, int cui, int IBAN, Garaj garaj, List<Ruta> rute, List<Angajat> angajati, Flota flota) {
         this.nume = nume;
         this.adresa = adresa;
         this.cui = cui;
         this.IBAN = IBAN;
         this.garaj = new Garaj(garaj);
         this.rute = rute;
+        this.angajati = angajati;
         this.flota = new Flota(flota);
     }
 
     public void adaugaRuta(Ruta ruta) {
         rute.add(ruta);
     }
+
+    public void adaugaAngajat(Angajat angajat) {angajati.add(angajat); }
 
 //    Calculeaza cheltuielile din garaj + salariul soferilor
     public int cheltuieliGarajplusSoferi() {
@@ -43,7 +48,7 @@ public class Companie {
     }
 
 //    Afiseaza cursele disponibile pentru o ruta
-    public void cautaCurse(Ruta ruta) {
+    public void cautaCurse(@NotNull Ruta ruta) {
         int ok = 0;
         for (Cursa cursa : ruta.getCurse()) {
             ok = 1;

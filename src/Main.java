@@ -1,4 +1,6 @@
+import Angajati.Angajat;
 import Angajati.Mecanic;
+import Citire.CitireCSV;
 import Flota.Flota;
 import Garaj.Garaj;
 import Garaj.Piesa;
@@ -6,6 +8,7 @@ import Ruta.Ruta;
 import Ruta.Cursa;
 import Flota.Camion;
 import Angajati.Sofer;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +54,9 @@ public class Main {
 
         List<Ruta> rute = new ArrayList<Ruta>();
 
-        Companie comp = new Companie("Iurom Impex","Romania Gorj",88556,71360, garaj, rute, flota);
+        List<Angajat> angajati = new ArrayList<>();
+
+        Companie comp = new Companie("Iurom Impex","Romania Gorj",88556,71360, garaj, rute, angajati, flota);
 
         comp.adaugaRuta(ruta1);
         comp.adaugaRuta(ruta2);
@@ -81,7 +86,9 @@ public class Main {
 //        comp.cautaCurse(ruta1);
 
 
+        CitireCSV curse = CitireCSV.getCsv();
 
+        System.out.println(CitireCSV.taraDescarcare);
 
 
     }
