@@ -47,8 +47,8 @@ public class Flota {
     @Override
     public String toString() {
         return "Flota{\n" +
-                "camioane=" + Arrays.toString(camioane.toArray()) +
-                "\nsoferi=" + Arrays.toString(soferi.toArray()) +
+                "camioane=" + camioane +
+                "\nsoferi=" + soferi +
                 '}';
     }
 }

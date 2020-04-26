@@ -1,22 +1,29 @@
 package Ruta;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Ruta {
 
-    private String tara_incarcare;
-    private String tara_descarcare;
+    private String taraIncarcare;
+    private String taraDescarcare;
     private List<Cursa> curse;
 
-    public Ruta(String tara_incarcare, String tara_descarcare, List<Cursa> curse) {
-        this.tara_incarcare = tara_incarcare;
-        this.tara_descarcare = tara_descarcare;
+    public Ruta(String taraIncarcare, String taraDescarcare, List<Cursa> curse) {
+        this.taraIncarcare = taraIncarcare;
+        this.taraDescarcare = taraDescarcare;
         this.curse = curse;
     }
 
     public List<Cursa> getCurse() {
         return curse;
+    }
+
+    public String getTaraIncarcare() {
+        return taraIncarcare;
+    }
+
+    public String getTaraDescarcare() {
+        return taraDescarcare;
     }
 
     public void adaugaCursa(Cursa cursa) {
@@ -30,9 +37,9 @@ public class Ruta {
     @Override
     public String toString() {
         return "Ruta{" +
-                "tara_incarcare='" + tara_incarcare + '\'' +
-                ", tara_descarcare='" + tara_descarcare + "' \n" +
-                "curse=" + Arrays.toString(curse.toArray()) +
+                "tara_incarcare='" + taraIncarcare + '\'' +
+                ", tara_descarcare='" + taraDescarcare + "' \n" +
+                "curse=" + curse+
                 "}\n";
     }
 }

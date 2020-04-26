@@ -5,8 +5,8 @@ public class Sofer extends Angajat {
     private int salariuSofer;
 
 
-    public Sofer(String nume, int vechime, boolean disponibil, int salariu) {
-        super(nume, vechime, disponibil);
+    public Sofer(String functie, String nume, int vechime, boolean disponibil, int salariu) {
+        super(functie, nume, vechime, disponibil);
         this.salariuSofer = salariu;
     }
 

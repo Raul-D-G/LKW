@@ -1,3 +1,5 @@
+package Companie;
+
 import Angajati.Angajat;
 import Flota.Flota;
 import Garaj.Garaj;
@@ -106,7 +108,7 @@ public class Companie {
 
     @Override
     public String toString() {
-        return "Companie{" +
+        return "Companie.Companie{" +
                 "nume='" + nume + '\'' +
                 ", adresa='" + adresa + '\'' +
                 ", cui=" + cui +

@@ -2,12 +2,14 @@ package Angajati;
 
 public abstract class Angajat {
 
+    private String functie;
     private String nume;
     private int vechime;
     private boolean disponibil;
     private static int numarAngajati = 0;
 
-    public Angajat(String nume, int vechime, boolean disponibil) {
+    public Angajat(String functie, String nume, int vechime, boolean disponibil) {
+        this.functie = functie;
         this.nume = nume;
         this.vechime = vechime;
         this.disponibil = disponibil;
@@ -31,6 +33,10 @@ public abstract class Angajat {
 
     public int getVechime() {
         return vechime;
+    }
+
+    public String getFunctie() {
+        return functie;
     }
 
     public boolean isDisponibil() {

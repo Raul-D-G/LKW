@@ -4,8 +4,8 @@ public class Mecanic extends Angajat {
 
     private int salariuMecanic;
 
-    public Mecanic(String nume, int vechime, boolean disponibil, int salariuMecanic) {
-        super(nume, vechime, disponibil);
+    public Mecanic(String functie, String nume, int vechime, boolean disponibil, int salariuMecanic) {
+        super(functie, nume, vechime, disponibil);
         this.salariuMecanic = salariuMecanic;
     }
 

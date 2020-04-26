@@ -55,8 +55,8 @@ public class Garaj {
     @Override
     public String toString() {
         return "Garaj{\n" +
-                "piese=" + Arrays.toString(piese.toArray()) +
-                ",\nmecanici=" + Arrays.toString(mecanici.toArray()) +
+                "piese=" + piese +
+                ",\nmecanici=" + mecanici +
                 '}';
     }
 }

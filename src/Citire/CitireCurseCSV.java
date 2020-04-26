@@ -6,18 +6,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CitireCSV {
+public class CitireCurseCSV {
 
-    static private CitireCSV csv = null;
-    static public List<String> id;
-    static public List<String> taraIncarcare;
-    static public List<String> orasIncarcare;
-    static public List<String> taraDescarcare;
-    static public List<String> orasDescarcare;
-    static public List<String> km;
-    static public List<String> pret;
+    static private CitireCurseCSV csv = null;
+    static private List<String> id;
+    static private List<String> taraIncarcare;
+    static private List<String> orasIncarcare;
+    static private List<String> taraDescarcare;
+    static private List<String> orasDescarcare;
+    static private List<String> km;
+    static private List<String> pret;
 
-    private CitireCSV() {
+    private CitireCurseCSV() {
         String linie;
         String cvsSplitBy = ",";
         String numeFisier = "src/MyCSV/Curse.csv";
@@ -42,10 +42,39 @@ public class CitireCSV {
         }
     }
 
-    static public synchronized CitireCSV getCsv() {
+    static public synchronized CitireCurseCSV getCsv() {
         if(csv == null)
-            csv = new CitireCSV();
+            csv = new CitireCurseCSV();
         return csv;
     }
+
+    public static List<String> getId() {
+        return id;
+    }
+
+    public static List<String> getTaraIncarcare() {
+        return taraIncarcare;
+    }
+
+    public static List<String> getOrasIncarcare() {
+        return orasIncarcare;
+    }
+
+    public static List<String> getTaraDescarcare() {
+        return taraDescarcare;
+    }
+
+    public static List<String> getOrasDescarcare() {
+        return orasDescarcare;
+    }
+
+    public static List<String> getKm() {
+        return km;
+    }
+
+    public static List<String> getPret() {
+        return pret;
+    }
+
 
 }
