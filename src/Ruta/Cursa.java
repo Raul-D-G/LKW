@@ -92,8 +92,8 @@ public class Cursa {
                 ", oras_incarcare='" + oras_incarcare + '\'' +
                 ", tara_descarcare='" + tara_descarcare + '\'' +
                 ", oras_descarcare='" + oras_descarcare + '\'' +
-                ", km=" + km +
-                ", pret=" + pret +
+                ", " + km +" de km" +
+                ", pret= " + pret + " euro" +
                 '}';
     }
 }

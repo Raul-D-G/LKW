@@ -1,4 +1,4 @@
-package Citire;
+package Servicii.Citire;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

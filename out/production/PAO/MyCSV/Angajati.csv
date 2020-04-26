@@ -1,4 +1,6 @@
-Cristi,8,1,4500
-Petre,3,1,4000
-Marian,5,1,5000
-Gabi,8,1,2500
+Sofer,Cristi,8,true,4500
+Sofer,Petre,3,true,4000
+Sofer,Florin,2,true,3500
+Sofer,Adelin,3,true,4000
+Mecanic,Marian,5,true,5000
+Mecanic,Gabi,8,true,2500
