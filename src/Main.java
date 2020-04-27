@@ -1,9 +1,11 @@
 import Companie.Companie;
 import Flota.Camion;
 import Ruta.Ruta;
-import Ruta.Cursa;
 import Servicii.IncarcareDate;
-import Servicii.Stergere.StergereCursa;
+import Ruta.Cursa;
+
+import Servicii.StocareActiuni.InregistrareCursa;
+
 
 
 public class Main {
@@ -14,6 +16,19 @@ public class Main {
 
         Ruta ruta = companie.afisareRute();
 
-        System.out.println(ruta);
+        Camion camion = companie.cautaCamionDisponibil();
+
+        Cursa cursa = companie.cautaCurse(ruta);
+
+        double profit = companie.acceptaCursa(cursa, camion);
+
+        System.out.println("Profit: " + profit + " euro, obtinut in urma cursei:\n" +
+                cursa +"\n efectuata cu camionul\n" + camion);
+
+
+        InregistrareCursa.inregistrareCursa(cursa, profit);
+
+
+
     }
 }

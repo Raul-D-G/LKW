@@ -76,12 +76,33 @@ public class Companie {
         return flota;
     }
 
-    //    Calculeaza cheltuielile din garaj + salariul soferilor
-    public int cheltuieliGarajplusSoferi() {
-        int cheltuieli = 0;
-        cheltuieli += garaj.cheltuieliGaraj();
-        cheltuieli += flota.celtuieliSoferi();
-        return cheltuieli;
+    public Ruta afisareRute() {
+        for (Ruta ruta : rute) {
+            System.out.println(ruta.getTaraIncarcare() + " -> " + ruta.getTaraDescarcare());
+        }
+        System.out.println("Selectati ruta dorita.");
+        boolean validInput = false;
+        Scanner scanner = new Scanner(System.in);
+        while (!validInput) {
+            try {
+
+                String linie = scanner.nextLine();
+                String[] tari = linie.split(" ");
+                for (Ruta ruta : rute) {
+                    if (ruta.getTaraIncarcare().equalsIgnoreCase(tari[0]) && ruta.getTaraDescarcare().equalsIgnoreCase(tari[1])) {
+                        validInput = true;
+                        System.out.println("Ruta a fost selectata!");
+                        return ruta;
+                    }
+                }
+
+                throw new InputMismatchException("ruta gresita");
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Ruta nu exista !");
+            }
+        }
+        return null;
     }
 
 //    Afiseaza cursele disponibile pentru o ruta si returneaza cursa selectata
@@ -97,10 +118,28 @@ public class Companie {
 
         System.out.println("\nIntroduceti id-ul cursei:\n");
         Scanner scanner = new Scanner(System.in);
+        boolean validInput = false;
 
-        int idCursa = scanner.nextInt();
+        while (!validInput) {
+            try {
 
-        return selectCursa(ruta, idCursa);
+                int idCursa = scanner.nextInt();
+
+                Cursa cursa = selectCursa(ruta, idCursa);
+
+                if (cursa == null)
+                    throw new InputMismatchException("Id-ul nu exista!");
+                else {
+                    validInput = true;
+                    System.out.println("Cursa a fost selectata!");
+                    return cursa;
+                }
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Id-ul nu exista!");
+            }
+        }
+        return null;
     }
 
 //    Afiseaza toate camioanele disponibile si returneaza camionul
@@ -118,8 +157,29 @@ public class Companie {
         }
         System.out.println("\nIntroduceti numarul de imatriculare:\n");
         Scanner scanner = new Scanner(System.in);
-        String camion = scanner.nextLine();
-        return selectCamion(camion);
+
+//        return selectCamion(camion);
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+
+                String camion1 = scanner.nextLine();
+
+                Camion camion = selectCamion(camion1);
+
+                if (camion == null)
+                    throw new InputMismatchException("Numarul nu exista!");
+                else {
+                    validInput = true;
+                    System.out.println("Camionul a fost selectat!");
+                    return camion;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Numarul nu exista!");
+            }
+        }
+        return null;
     }
 
 //    Returneaza profitul obtinut in urma cursei acceptate
@@ -130,7 +190,7 @@ public class Companie {
         int pretCursa = cursa.getPret();
         double consumCamion = camion.getConsumPeKm();
         int km = cursa.getKm();
-        double cheltuieli = km * consumCamion;
+        double cheltuieli = km * consumCamion / 100;
 
         profit = pretCursa - cheltuieli;
 
@@ -139,6 +199,14 @@ public class Companie {
         camion.setDisponibil(false);
 
         return  profit;
+    }
+
+    //    Calculeaza cheltuielile din garaj + salariul soferilor
+    public int cheltuieliGarajplusSoferi() {
+        int cheltuieli = 0;
+        cheltuieli += garaj.cheltuieliGaraj();
+        cheltuieli += flota.celtuieliSoferi();
+        return cheltuieli;
     }
 
 //    Returneaza cursa selectata
@@ -160,33 +228,7 @@ public class Companie {
     }
 
 
-    public Ruta afisareRute() {
-        for (Ruta ruta : rute) {
-            System.out.println(ruta.getTaraIncarcare() + " -> " + ruta.getTaraDescarcare());
-        }
-        System.out.println("Selectati ruta dorita.");
-        boolean validInput = false;
-        Scanner scanner = new Scanner(System.in);
-        while (!validInput) {
-            try {
 
-                String linie = scanner.nextLine();
-                String[] tari = linie.split(" ");
-                for (Ruta ruta : rute) {
-                    if (ruta.getTaraIncarcare().equalsIgnoreCase(tari[0]) && ruta.getTaraDescarcare().equalsIgnoreCase(tari[1])) {
-                        validInput = true;
-                        return ruta;
-                    }
-                }
-
-                throw new InputMismatchException("ruta gresita");
-            }
-            catch (InputMismatchException e) {
-                System.out.println("Ruta nu exista !");
-            }
-        }
-        return null;
-    }
 
     @Override
     public String toString() {
