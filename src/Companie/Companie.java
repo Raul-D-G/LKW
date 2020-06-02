@@ -6,7 +6,6 @@ import Garaj.Garaj;
 import Ruta.Ruta;
 import Ruta.Cursa;
 import Flota.Camion;
-import Servicii.Stergere.StergereCursa;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -180,25 +179,6 @@ public class Companie {
             }
         }
         return null;
-    }
-
-//    Returneaza profitul obtinut in urma cursei acceptate
-//    Sterge cursa acceptata din fiserul csv
-//    Seteaza camionul selecata indisponibil.
-    public double acceptaCursa(@NotNull Cursa cursa, @NotNull Camion camion) {
-        double profit;
-        int pretCursa = cursa.getPret();
-        double consumCamion = camion.getConsumPeKm();
-        int km = cursa.getKm();
-        double cheltuieli = km * consumCamion / 100;
-
-        profit = pretCursa - cheltuieli;
-
-        StergereCursa.stergereCursa(Integer.toString(cursa.getId()), cursa.getId());
-
-        camion.setDisponibil(false);
-
-        return  profit;
     }
 
     //    Calculeaza cheltuielile din garaj + salariul soferilor
