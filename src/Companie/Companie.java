@@ -23,10 +23,9 @@ public class Companie {
     private List<Ruta> rute;
     private List<Angajat> angajati;
     private Flota flota;
-    private List<Cursa> curse;
 
 
-    public Companie(String nume, String adresa, String cui, String IBAN, Garaj garaj, List<Ruta> rute, List<Angajat> angajati, Flota flota,List<Cursa> curse) {
+    public Companie(String nume, String adresa, String cui, String IBAN, Garaj garaj, List<Ruta> rute, List<Angajat> angajati, Flota flota) {
         this.nume = nume;
         this.adresa = adresa;
         this.cui = cui;
@@ -35,7 +34,6 @@ public class Companie {
         this.rute = rute;
         this.angajati = angajati;
         this.flota = new Flota(flota);
-        this.curse = curse;
     }
 
 
@@ -45,14 +43,6 @@ public class Companie {
     }
 
     public void adaugaAngajat(Angajat angajat) {angajati.add(angajat); }
-
-    public List<Cursa> getCurse() {
-        return curse;
-    }
-
-    public void setCurse(List<Cursa> curse) {
-        this.curse = curse;
-    }
 
     public String getNume() {
         return nume;

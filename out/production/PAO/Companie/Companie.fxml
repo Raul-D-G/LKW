@@ -13,9 +13,9 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Companie.CompanieController">
    <children>
-      <TabPane layoutY="2.0" prefHeight="717.0" prefWidth="1278.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPan" layoutY="2.0" prefHeight="717.0" prefWidth="1278.0" tabClosingPolicy="ALL_TABS">
         <tabs>
-          <Tab text="Companie">
+          <Tab closable="false" text="Companie">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -44,7 +44,7 @@
                            </children></VBox>
                         <VBox layoutX="293.0" prefHeight="248.0" prefWidth="668.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="667.0" text="Rute">
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="662.0" text="Rute">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -52,27 +52,27 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <TableView fx:id="tabelRute" prefHeight="232.0" prefWidth="668.0">
+                              <TableView fx:id="tabelRute" prefHeight="195.0" prefWidth="668.0">
                                 <columns>
-                                  <TableColumn fx:id="incarcareRute" prefWidth="334.0" text="Tara Incarcare" />
-                                  <TableColumn fx:id="descarcareRute" prefWidth="334.0" text="Tara Descarcare" />
+                                  <TableColumn fx:id="incarcareRute" prefWidth="332.0" text="Tara Incarcare" />
+                                  <TableColumn fx:id="descarcareRute" prefWidth="332.0" text="Tara Descarcare" />
                                 </columns>
                               </TableView>
+                              <Button fx:id="selectRuta" mnemonicParsing="false" onAction="#afiseazaCurse" prefHeight="26.0" prefWidth="668.0" text="Selecteaza Ruta">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Button>
                            </children>
                         </VBox>
                         <VBox layoutX="961.0" layoutY="4.0" prefHeight="244.0" prefWidth="315.0">
                            <children>
-                              <Button fx:id="butonGaraj" mnemonicParsing="false" prefHeight="39.0" prefWidth="315.0" text="GARAJ">
+                              <Button fx:id="butonGaraj" mnemonicParsing="false" onAction="#mergiLaGaraj" prefHeight="39.0" prefWidth="315.0" text="GARAJ">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="butonFlota" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="315.0" text="FLOTA">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="acceptaCursa" layoutX="10.0" layoutY="49.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="315.0" text="Accepta Cursa">
+                              <Button fx:id="butonFlota" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#mergiLaFlota" prefHeight="39.0" prefWidth="315.0" text="FLOTA">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                                  </VBox.margin>
@@ -81,15 +81,15 @@
                         </VBox>
                         <VBox layoutY="251.0" prefHeight="436.0" prefWidth="1278.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="1280.0" text="Curse">
+                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="1258.0" text="Curse">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets left="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <TableView fx:id="tabelCurse" prefHeight="392.0" prefWidth="1278.0">
+                              <TableView fx:id="tabelCurse" prefHeight="348.0" prefWidth="1278.0">
                                 <columns>
                                   <TableColumn fx:id="idcol" prefWidth="182.0" text="ID" />
                                   <TableColumn fx:id="incarcareTcol" prefWidth="182.0" text="Tara incarcare" />
@@ -100,6 +100,11 @@
                                     <TableColumn fx:id="pretcol" prefWidth="182.0" text="Pret" />
                                 </columns>
                               </TableView>
+                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="270.0" text="Accepta Cursa">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="500.0" />
+                                 </VBox.margin>
+                              </Button>
                            </children>
                         </VBox>
                      </children>

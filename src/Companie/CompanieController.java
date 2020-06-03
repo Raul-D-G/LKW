@@ -9,29 +9,38 @@ import Garaj.Garaj;
 import Garaj.Piesa;
 import Ruta.Ruta;
 import Ruta.Cursa;
+import Garaj.GarajController;
+import Flota.FlotaController;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import DbUtil.DbConnection;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CompanieController implements Initializable {
+
+    @FXML
+    private Button butonGaraj;
+    @FXML
+    private TabPane tabPan;
+
 
     @FXML
     private Label numeCompanie;
@@ -71,7 +80,8 @@ public class CompanieController implements Initializable {
 
     private Companie companie;
     private DbConnection dc;
-    private ObservableList<Ruta> data;
+    private ObservableList<Ruta> rutaObservableList;
+    private ObservableList<Cursa> cursaObservableList;
 
     Companie creareaCompanie(Connection conn) {
         String sql1 = "SELECT * FROM Companie";
@@ -193,7 +203,7 @@ public class CompanieController implements Initializable {
                 adresa = rs.getString(2);
                 cui = rs.getString(3);
                 iban = rs.getString(4);
-                return new Companie(nume, adresa, cui, iban, garaj, rute, angajati, flota, curse);
+                return new Companie(nume, adresa, cui, iban, garaj, rute, angajati, flota);
             }
         }
         catch (SQLException e) {
@@ -216,10 +226,10 @@ public class CompanieController implements Initializable {
             this.cuiCompanie.setText(companie.getCui());
             this.ibanCompanie.setText(companie.getIBAN());
 
-            this.data = FXCollections.observableArrayList();
+            this.rutaObservableList = FXCollections.observableArrayList();
 
             for (Ruta ruta : companie.getRute()) {
-                this.data.add(new Ruta(ruta.getTaraIncarcare(), ruta.getTaraDescarcare(), ruta.getCurse()));
+                this.rutaObservableList.add(new Ruta(ruta.getTaraIncarcare(), ruta.getTaraDescarcare(), ruta.getCurse()));
             }
 
 
@@ -229,14 +239,115 @@ public class CompanieController implements Initializable {
         }
 
 
-        System.out.println(this.data);
-
-
         this.incarcareRute.setCellValueFactory(new PropertyValueFactory<>("taraIncarcare"));
         this.descarcareRute.setCellValueFactory(new PropertyValueFactory<>("taraDescarcare"));
         this.tabelRute.setItems(null);
-        this.tabelRute.setItems(this.data);
+        this.tabelRute.setItems(this.rutaObservableList);
 
+    }
+
+
+
+    public void afiseazaCurse(javafx.event.ActionEvent actionEvent) {
+
+        try {
+            TablePosition pos = tabelRute.getSelectionModel().getSelectedCells().get(0);
+            int row = pos.getRow();
+
+            Ruta item = tabelRute.getItems().get(row);
+            List<Cursa> curse = item.getCurse();
+
+            this.cursaObservableList = FXCollections.observableArrayList();
+
+            for (Cursa cursa : curse) {
+                this.cursaObservableList.add(new Cursa(cursa.getId(), cursa.getTaraIncarcare(), cursa.getOrasIncarcare(), cursa.getOrasDescarcare(),
+                        cursa.getOrasDescarcare(), cursa.getKm(), cursa.getPret()));
+            }
+
+
+            this.idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+            this.incarcareTcol.setCellValueFactory(new PropertyValueFactory<>("taraIncarcare"));
+            this.incarcareOcol.setCellValueFactory(new PropertyValueFactory<>("orasIncarcare"));
+            this.descarcareTcol.setCellValueFactory(new PropertyValueFactory<>("taraDescarcare"));
+            this.DescarcareOcol.setCellValueFactory(new PropertyValueFactory<>("orasDescarcare"));
+            this.kmcol.setCellValueFactory(new PropertyValueFactory<>("km"));
+            this.pretcol.setCellValueFactory(new PropertyValueFactory<>("pret"));
+
+            this.tabelCurse.setItems(null);
+            this.tabelCurse.setItems(this.cursaObservableList);
+        }
+        catch (RuntimeException ex) {
+            System.out.println("Ruta neselectata");
+        }
+    }
+
+    public void mergiLaGaraj(ActionEvent actionEvent) {
+        boolean ok = true;
+        for (Tab tab : tabPan.getTabs()) {
+            if (tab.getText().equalsIgnoreCase("garaj"))
+                ok = false;
+        }
+        if (ok)
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/Garaj/Garaj.fxml").openStream());
+                Tab tab = new Tab("Garaj");
+
+                tab.setContent(root);
+                GarajController garajController = (GarajController) loader.getController();
+
+                tabPan.getTabs().add(tab);
+
+
+                SingleSelectionModel<Tab> selectionModel = tabPan.getSelectionModel();
+                selectionModel.select(tab);
+
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+    }
+
+    public void mergiLaFlota(ActionEvent actionEvent) {
+        boolean ok = true;
+        for (Tab tab : tabPan.getTabs()) {
+            if (tab.getText().equalsIgnoreCase("flota"))
+                ok = false;
+        }
+        if (ok) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/Flota/Flota.fxml").openStream());
+                Tab tab = new Tab("Flota");
+
+                tab.setContent(root);
+                FlotaController flotaController = (FlotaController) loader.getController();
+
+                tabPan.getTabs().add(tab);
+
+
+                SingleSelectionModel<Tab> selectionModel = tabPan.getSelectionModel();
+                selectionModel.select(tab);
+
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void acceptaCursa(ActionEvent actionEvent) {
+        try {
+            TablePosition pos = tabelCurse.getSelectionModel().getSelectedCells().get(0);
+            int row = pos.getRow();
+
+            Cursa cursa = tabelCurse.getItems().get(row);
+            
+        }
+        catch (RuntimeException e) {
+            System.out.println("Cursa neselectata");
+        }
     }
 
 
