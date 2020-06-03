@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import DbUtil.DbConnection;
 
+import javax.swing.*;
+
 public class LoginModel {
     Connection connection;
 
@@ -39,7 +41,6 @@ public class LoginModel {
             pr.setString(2,password);
 
             rs = pr.executeQuery();
-
             return rs.next();
         }
         catch (SQLException e) {

@@ -5,67 +5,72 @@ import org.jetbrains.annotations.NotNull;
 public class Cursa {
 
     private int id;
-    private String tara_incarcare;
-    private String oras_incarcare;
-    private String tara_descarcare;
-    private String oras_descarcare;
+    private String taraIncarcare;
+    private String orasIncarcare;
+    private String taraDescarcare;
+    private String orasDescarcare;
     private int km;
-    private int pret;
+    private double pret;
 
-    public Cursa(int id, String tara_incarcare, String oras_incarcare, String tara_descarcare, String oras_descarcare, int km, int pret) {
+    public Cursa(int id, String taraIncarcare, String orasIncarcare, String taraDescarcare, String orasDescarcare, int km, double pret) {
         this.id = id;
-        this.tara_incarcare = tara_incarcare;
-        this.oras_incarcare = oras_incarcare;
-        this.tara_descarcare = tara_descarcare;
-        this.oras_descarcare = oras_descarcare;
+        this.taraIncarcare = taraIncarcare;
+        this.orasIncarcare = orasIncarcare;
+        this.taraDescarcare = taraDescarcare;
+        this.orasDescarcare = orasDescarcare;
         this.km = km;
         this.pret = pret;
     }
 
     public Cursa(@NotNull Cursa cursa) {
         this.id = cursa.id;
-        this.tara_incarcare = cursa.tara_incarcare;
-        this.oras_incarcare = cursa.oras_incarcare;
-        this.tara_descarcare = cursa.tara_descarcare;
-        this.oras_descarcare = cursa.oras_descarcare;
+        this.taraIncarcare = cursa.taraIncarcare;
+        this.orasIncarcare = cursa.orasIncarcare;
+        this.taraDescarcare = cursa.taraDescarcare;
+        this.orasDescarcare = cursa.orasDescarcare;
         this.pret = cursa.pret;
         this.km = cursa.km;
     }
+
 
     public int getId() {
         return id;
     }
 
-    public String getTara_incarcare() {
-        return tara_incarcare;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setTara_incarcare(String tara_incarcare) {
-        this.tara_incarcare = tara_incarcare;
+    public String getTaraIncarcare() {
+        return taraIncarcare;
     }
 
-    public String getOras_incarcare() {
-        return oras_incarcare;
+    public void setTaraIncarcare(String taraIncarcare) {
+        this.taraIncarcare = taraIncarcare;
     }
 
-    public void setOras_incarcare(String oras_incarcare) {
-        this.oras_incarcare = oras_incarcare;
+    public String getOrasIncarcare() {
+        return orasIncarcare;
     }
 
-    public String getTara_descarcare() {
-        return tara_descarcare;
+    public void setOrasIncarcare(String orasIncarcare) {
+        this.orasIncarcare = orasIncarcare;
     }
 
-    public void setTara_descarcare(String tara_descarcare) {
-        this.tara_descarcare = tara_descarcare;
+    public String getTaraDescarcare() {
+        return taraDescarcare;
     }
 
-    public String getOras_descarcare() {
-        return oras_descarcare;
+    public void setTaraDescarcare(String taraDescarcare) {
+        this.taraDescarcare = taraDescarcare;
     }
 
-    public void setOras_descarcare(String oras_descarcare) {
-        this.oras_descarcare = oras_descarcare;
+    public String getOrasDescarcare() {
+        return orasDescarcare;
+    }
+
+    public void setOrasDescarcare(String orasDescarcare) {
+        this.orasDescarcare = orasDescarcare;
     }
 
     public int getKm() {
@@ -76,11 +81,11 @@ public class Cursa {
         this.km = km;
     }
 
-    public int getPret() {
+    public double getPret() {
         return pret;
     }
 
-    public void setPret(int pret) {
+    public void setPret(double pret) {
         this.pret = pret;
     }
 
@@ -88,10 +93,10 @@ public class Cursa {
     public String toString() {
         return "Cursa{" +
                 "id=" + id +
-                ", tara_incarcare='" + tara_incarcare + '\'' +
-                ", oras_incarcare='" + oras_incarcare + '\'' +
-                ", tara_descarcare='" + tara_descarcare + '\'' +
-                ", oras_descarcare='" + oras_descarcare + '\'' +
+                ", tara_incarcare='" + taraIncarcare + '\'' +
+                ", oras_incarcare='" + orasIncarcare + '\'' +
+                ", tara_descarcare='" + taraDescarcare + '\'' +
+                ", oras_descarcare='" + orasDescarcare + '\'' +
                 ", " + km +" de km" +
                 ", pret= " + pret + " euro" +
                 '}';

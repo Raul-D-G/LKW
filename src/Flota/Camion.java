@@ -2,12 +2,14 @@ package Flota;
 
 public class Camion {
 
+    private int id;
     private String numarImatriculare;
     private String marca;
     private boolean disponibil;
     private double consumPeKm;
 
-    public Camion(String numarImatriculare, String marca, boolean disponibil, double consumPeKm) {
+    public Camion(int id, String numarImatriculare, String marca, boolean disponibil, double consumPeKm) {
+        this.id = id;
         this.numarImatriculare = numarImatriculare;
         this.marca = marca;
         this.disponibil = disponibil;

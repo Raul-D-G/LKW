@@ -2,24 +2,24 @@ package Angajati;
 
 public class Mecanic extends Angajat {
 
-    private int salariuMecanic;
+    private double salariuMecanic;
 
-    public Mecanic(String functie, String nume, int vechime, boolean disponibil, int salariuMecanic) {
-        super(functie, nume, vechime, disponibil);
+    public Mecanic(int id, String functie, String nume, int vechime, boolean disponibil, double salariuMecanic) {
+        super(id, functie, nume, vechime, disponibil);
         this.salariuMecanic = salariuMecanic;
     }
 
-    public int getSalariuMecanic() {
+    public double getSalariuMecanic() {
         return salariuMecanic;
     }
 
-    public void setSalariuMecanic(int salariuMecanic) {
+    public void setSalariuMecanic(double salariuMecanic) {
         this.salariuMecanic = salariuMecanic;
     }
 
     @Override
-    public int calculSalariu() {
-        int salariu_nou =  salariuMecanic + getVechime() * 10;
+    public double calculSalariu() {
+        double salariu_nou =  salariuMecanic + getVechime() * 10;
         setSalariuMecanic(salariu_nou);
         return salariu_nou;
     }
