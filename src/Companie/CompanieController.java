@@ -77,6 +77,8 @@ public class CompanieController implements Initializable {
 
 
     public static Companie companie;
+    public static Sofer sofer;
+    public static Camion camion;
     private DbConnection dc;
     private ObservableList<Ruta> rutaObservableList;
     private ObservableList<Cursa> cursaObservableList;
@@ -358,15 +360,22 @@ public class CompanieController implements Initializable {
     }
 
     public void acceptaCursa(ActionEvent actionEvent) {
+        Boolean ok = true;
         try {
             TablePosition pos = tabelCurse.getSelectionModel().getSelectedCells().get(0);
             int row = pos.getRow();
 
             Cursa cursa = tabelCurse.getItems().get(row);
-            
+            mergiLaFlota(actionEvent);
+
         }
         catch (RuntimeException e) {
-            System.out.println("Cursa neselectata");
+            ok = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Avertisment");
+            alert.setHeaderText("Cursa neselectata");
+            alert.setContentText("Va rugam selectati o cursa!");
+            alert.showAndWait();
         }
     }
 

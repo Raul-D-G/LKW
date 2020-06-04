@@ -142,13 +142,13 @@ public class GarajController implements Initializable {
             int row = pos.getRow();
 
             Mecanic mecanic = tabelMecanic.getItems().get(row);
-            mecanicObservableList.remove(mecanic);
+
             status = mecanic.isDisponibil();
             id = mecanic.getId();
 
-
+            int indx = mecanicObservableList.indexOf(mecanic);
             mecanic.setDisponibil(!mecanic.isDisponibil());
-            mecanicObservableList.add(mecanic);
+            mecanicObservableList.set(indx, mecanic);
 
 
 
@@ -175,7 +175,6 @@ public class GarajController implements Initializable {
                 pr.setInt(2,id);
 
                 pr.execute();
-
                 conn.close();
 
             }
@@ -245,13 +244,12 @@ public class GarajController implements Initializable {
             int row = pos.getRow();
 
             Piesa piesa = tabelPiesa.getItems().get(row);
-            piesaObservableList.remove(piesa);
             id = piesa.getId();
             nrpiese = piesa.getNumarDePiese();
 
+            int indx = piesaObservableList.indexOf(piesa);
             piesa.setNumarDePiese(piesa.getNumarDePiese() - 1);
-
-            piesaObservableList.add(piesa);
+            piesaObservableList.set(indx, piesa);
         }
         catch (RuntimeException e) {
             ok = false;
