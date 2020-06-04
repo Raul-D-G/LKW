@@ -102,7 +102,7 @@
                <children>
                   <HBox alignment="TOP_RIGHT" layoutX="2.0" layoutY="14.0" prefHeight="140.0" prefWidth="636.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#SelecteazaPiesa" prefHeight="25.0" prefWidth="192.0" text="Selecteaza Piesa">
+                        <Button mnemonicParsing="false" onAction="#selecteazaPiesa" prefHeight="25.0" prefWidth="192.0" text="Folosete Piesa">
                            <HBox.margin>
                               <Insets left="20.0" top="100.0" />
                            </HBox.margin>
@@ -119,7 +119,7 @@
                      </children></HBox>
                   <VBox layoutX="4.0" layoutY="168.0" prefHeight="549.0" prefWidth="630.0">
                      <children>
-                        <TableView fx:id="tebelPiesa" prefHeight="300.0" prefWidth="630.0">
+                        <TableView fx:id="tabelPiesa" prefHeight="300.0" prefWidth="630.0">
                           <columns>
                             <TableColumn fx:id="colPid" prefWidth="157.0" text="ID" />
                             <TableColumn fx:id="colPnume" prefWidth="157.0" text="Nume Piesa" />

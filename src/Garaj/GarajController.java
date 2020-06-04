@@ -3,16 +3,12 @@ package Garaj;
 import Angajati.Mecanic;
 import Companie.CompanieController;
 import DbUtil.DbConnection;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -43,7 +39,7 @@ public class GarajController implements Initializable {
     private TableColumn<Mecanic, Double> colMsalariu;
 
     @FXML
-    private TableView<Piesa> tebelPiesa;
+    private TableView<Piesa> tabelPiesa;
     @FXML
     private TableColumn<Piesa, Integer> colPid;
     @FXML
@@ -80,13 +76,16 @@ public class GarajController implements Initializable {
     private ImageView imgP;
 
 
+    private ObservableList<Mecanic> mecanicObservableList;
+    private ObservableList<Piesa> piesaObservableList;
+
     private void afiseazaMecanici() {
-        ObservableList<Mecanic> mecanicObservableList;
-        mecanicObservableList = FXCollections.observableArrayList();
+
+        this.mecanicObservableList = FXCollections.observableArrayList();
 
         for (Mecanic mecanic : CompanieController.companie.getGaraj().getMecanici()) {
 
-            mecanicObservableList.add(new Mecanic(mecanic.getId(), mecanic.getFunctie(), mecanic.getNume(),
+            this.mecanicObservableList.add(new Mecanic(mecanic.getId(), mecanic.getFunctie(), mecanic.getNume(),
                     mecanic.getVechime(), mecanic.isDisponibil(), mecanic.getSalariuMecanic()));
         }
 
@@ -98,15 +97,15 @@ public class GarajController implements Initializable {
         this.colMsalariu.setCellValueFactory(new PropertyValueFactory<>("salariuMecanic"));
 
         this.tabelMecanic.setItems(null);
-        this.tabelMecanic.setItems(mecanicObservableList);
+        this.tabelMecanic.setItems(this.mecanicObservableList);
     }
 
     private void afiseazaPiese() {
-        ObservableList<Piesa> piesaObservableList;
-        piesaObservableList = FXCollections.observableArrayList();
+
+        this.piesaObservableList = FXCollections.observableArrayList();
 
         for (Piesa piesa : CompanieController.companie.getGaraj().getPiese()) {
-            piesaObservableList.add(new Piesa(piesa.getId(), piesa.getNume(), piesa.getPret(), piesa.getNumarDePiese()));
+            this.piesaObservableList.add(new Piesa(piesa.getId(), piesa.getNume(), piesa.getPret(), piesa.getNumarDePiese()));
         }
 
         this.colPid.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -114,8 +113,8 @@ public class GarajController implements Initializable {
         this.colPpret.setCellValueFactory(new PropertyValueFactory<>("pret"));
         this.colPnumar.setCellValueFactory(new PropertyValueFactory<>("numarDePiese"));
 
-        this.tebelPiesa.setItems(null);
-        this.tebelPiesa.setItems(piesaObservableList);
+        this.tabelPiesa.setItems(null);
+        this.tabelPiesa.setItems(this.piesaObservableList);
     }
 
     @Override
@@ -134,6 +133,56 @@ public class GarajController implements Initializable {
     }
 
     public void selecteazaMecanic(ActionEvent actionEvent) {
+        String sql = "UPDATE Angajati SET Disponibil = ? WHERE Id = ?";
+        boolean ok = true, status = true;
+        int id = 0;
+
+        try {
+            TablePosition pos = tabelMecanic.getSelectionModel().getSelectedCells().get(0);
+            int row = pos.getRow();
+
+            Mecanic mecanic = tabelMecanic.getItems().get(row);
+            mecanicObservableList.remove(mecanic);
+            status = mecanic.isDisponibil();
+            id = mecanic.getId();
+
+
+            mecanic.setDisponibil(!mecanic.isDisponibil());
+            mecanicObservableList.add(mecanic);
+
+
+
+        }
+        catch (RuntimeException e) {
+            ok = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Avertisment");
+            alert.setHeaderText("Mecanic neselectat");
+            alert.setContentText("Va rugam selectati un mecanic!");
+
+            alert.showAndWait();
+        }
+
+        if (ok) {
+            try {
+
+                PreparedStatement pr;
+
+                Connection conn = DbConnection.getConnection();
+                assert conn != null;
+                pr = conn.prepareStatement(sql);
+                pr.setBoolean(1,!status);
+                pr.setInt(2,id);
+
+                pr.execute();
+
+                conn.close();
+
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
@@ -145,7 +194,8 @@ public class GarajController implements Initializable {
             Mecanic mecanicNou = new Mecanic(Integer.parseInt(this.idMecanic.getText()), this.functieMecanic.getText(), this.numeMecanic.getText(),
                     Integer.parseInt(this.vechimeMecanic.getText()), Boolean.parseBoolean(this.disponibilMecanic.getText()), Double.parseDouble(this.salariuMecanic.getText()));
             CompanieController.companie.getGaraj().adaugaMecanic(mecanicNou);
-            afiseazaMecanici();
+
+            this.mecanicObservableList.add(mecanicNou);
         }
         catch (RuntimeException e) {
             ok = false;
@@ -186,8 +236,49 @@ public class GarajController implements Initializable {
         }
     }
 
-    public void SelecteazaPiesa(ActionEvent actionEvent) {
+    public void selecteazaPiesa(ActionEvent actionEvent) {
+        String sql = "UPDATE Piese SET Nrpiese = ? WHERE Id = ?";
+        boolean ok = true;
+        int id = 0, nrpiese = 0;
+        try {
+            TablePosition pos = tabelPiesa.getSelectionModel().getSelectedCells().get(0);
+            int row = pos.getRow();
 
+            Piesa piesa = tabelPiesa.getItems().get(row);
+            piesaObservableList.remove(piesa);
+            id = piesa.getId();
+            nrpiese = piesa.getNumarDePiese();
+
+            piesa.setNumarDePiese(piesa.getNumarDePiese() - 1);
+
+            piesaObservableList.add(piesa);
+        }
+        catch (RuntimeException e) {
+            ok = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Avertisment");
+            alert.setHeaderText("Piesa neselectata");
+            alert.setContentText("Va rugam selectati o piesa!");
+
+            alert.showAndWait();
+        }
+        if (ok) {
+            try {
+                PreparedStatement pr;
+                Connection conn = DbConnection.getConnection();
+
+                assert conn != null;
+                pr = conn.prepareStatement(sql);
+                pr.setInt(1,nrpiese - 1);
+                pr.setInt(2,id);
+                pr.execute();
+                conn.close();
+
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void adaugaPiesa(ActionEvent actionEvent) {
@@ -200,8 +291,7 @@ public class GarajController implements Initializable {
                     Integer.parseInt(this.nrPiesa.getText()));
 
             CompanieController.companie.getGaraj().adaugaPiesa(piesaNoua);
-
-            afiseazaPiese();
+            this.piesaObservableList.add(piesaNoua);
         }
         catch (RuntimeException e) {
             ok = false;

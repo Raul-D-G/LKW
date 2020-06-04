@@ -37,8 +37,6 @@ import java.util.ResourceBundle;
 public class CompanieController implements Initializable {
 
     @FXML
-    private Button butonGaraj;
-    @FXML
     private TabPane tabPan;
 
 
