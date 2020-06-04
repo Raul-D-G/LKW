@@ -77,8 +77,7 @@ public class CompanieController implements Initializable {
 
 
     public static Companie companie;
-    public static Sofer sofer;
-    public static Camion camion;
+    public static Cursa cursaAcceptata = null;
     private DbConnection dc;
     private ObservableList<Ruta> rutaObservableList;
     private ObservableList<Cursa> cursaObservableList;
@@ -360,12 +359,24 @@ public class CompanieController implements Initializable {
     }
 
     public void acceptaCursa(ActionEvent actionEvent) {
-        Boolean ok = true;
+        boolean ok = true;
         try {
             TablePosition pos = tabelCurse.getSelectionModel().getSelectedCells().get(0);
             int row = pos.getRow();
 
             Cursa cursa = tabelCurse.getItems().get(row);
+            cursaAcceptata = cursa;
+
+            cursaObservableList.remove(cursa);
+
+            SingleSelectionModel<Tab> selectionModel = tabPan.getSelectionModel();
+            for (Tab tab : tabPan.getTabs()) {
+                if (tab.getText().equalsIgnoreCase("Flota")) {
+                    tabPan.getTabs().remove(tab);
+                    break;
+                }
+            }
+
             mergiLaFlota(actionEvent);
 
         }

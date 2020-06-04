@@ -4,6 +4,7 @@ import Angajati.Mecanic;
 import Angajati.Sofer;
 import Companie.CompanieController;
 import DbUtil.DbConnection;
+import Ruta.Cursa;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 
 public class FlotaController implements Initializable {
@@ -79,8 +81,15 @@ public class FlotaController implements Initializable {
     @FXML
     private ImageView imgFlota;
 
+    @FXML
+    private  Button preiaCursa;
+
     private ObservableList<Sofer> soferObservableList;
     private ObservableList<Camion> camionObservableList;
+
+    private Sofer soferSelectat;
+    private Camion camionSelectat;
+    private static int IdContabilitate ;
 
 
     private void afiseazaSoferi() {
@@ -124,12 +133,19 @@ public class FlotaController implements Initializable {
         this.tabelCamion.setItems(this.camionObservableList);
     }
 
-
+    private static void idCont() {
+        IdContabilitate++;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         afiseazaSoferi();
         afiseazaCamioane();
+
+        if (CompanieController.cursaAcceptata != null) {
+            preiaCursa.setVisible(true);
+        }
+
 
         File file = new File("src/imgFlota.png");
         Image image = new Image(file.toURI().toString());
@@ -186,12 +202,11 @@ public class FlotaController implements Initializable {
         }
     }
 
-    public Camion selecteazaCamion(ActionEvent actionEvent) {
+    public void selecteazaCamion(ActionEvent actionEvent) {
 
         String sql = "UPDATE Camioane SET Disponibil = ? WHERE Id = ?";
         boolean ok = true, status = true;
         int id = 0;
-        Camion camionSelectat = null;
 
         try {
             TablePosition pos = tabelCamion.getSelectionModel().getSelectedCells().get(0);
@@ -206,9 +221,7 @@ public class FlotaController implements Initializable {
             camion.setDisponibil(!camion.isDisponibil());
             camionObservableList.set(indx, camion);
 
-            camionSelectat = camion;
-            notify();
-
+            this.camionSelectat = camion;
         }
         catch (RuntimeException e) {
             ok = false;
@@ -234,9 +247,7 @@ public class FlotaController implements Initializable {
             catch (SQLException e) {
                 e.printStackTrace();
             }
-            return camionSelectat;
         }
-        return null;
     }
 
 
@@ -244,7 +255,6 @@ public class FlotaController implements Initializable {
         String sql = "UPDATE Angajati SET Disponibil = ? WHERE Id = ?";
         boolean ok = true, status = true;
         int id = 0;
-        Sofer soferSelectat = null;
 
         try {
             TablePosition pos = tabelSofer.getSelectionModel().getSelectedCells().get(0);
@@ -259,7 +269,7 @@ public class FlotaController implements Initializable {
             sofer.setDisponibil(!sofer.isDisponibil());
             soferObservableList.set(indx, sofer);
 
-            soferSelectat = sofer;
+            this.soferSelectat = sofer;
 
         }
         catch (RuntimeException e) {
@@ -286,7 +296,7 @@ public class FlotaController implements Initializable {
             catch (SQLException e) {
                 e.printStackTrace();
             }
-            return soferSelectat;
+            return this.soferSelectat;
         }
         return null;
     }
@@ -369,4 +379,44 @@ public class FlotaController implements Initializable {
         }
     }
 
+
+
+
+    public void cursa(ActionEvent actionEvent) {
+
+        String sql = "INSERT INTO Contabilitate(Id, NumeCursa, Camion, Sofer, Profit) VALUES(?, ?, ?, ?, ?)";
+        Cursa cursa = CompanieController.cursaAcceptata;
+        Sofer sofer = this.soferSelectat;
+        Camion camion = this.camionSelectat;
+
+        if (sofer != null && camion != null && cursa != null) {
+
+            double cheltuieli = sofer.getSalariuSofer()/4 + cursa.getKm() * camion.getConsumPeKm()/100;
+            double profit = cursa.getPret() - cheltuieli;
+            String numeCursa = cursa.getOrasIncarcare() + " " + cursa.getOrasDescarcare();
+            FlotaController.idCont();
+            String uniqueID = String.valueOf(FlotaController.IdContabilitate);
+
+            try {
+                Connection conn = DbConnection.getConnection();
+                assert conn != null;
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+                stmt.setString(1, uniqueID);
+                stmt.setString(2, numeCursa);
+                stmt.setString(3, camion.getNumarImatriculare());
+                stmt.setString(4, sofer.getNume());
+                stmt.setString(5, String.valueOf(profit));
+
+                stmt.executeUpdate();
+                conn.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+    }
 }
