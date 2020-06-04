@@ -78,7 +78,7 @@ public class CompanieController implements Initializable {
     private TableColumn<Cursa, Double> pretcol;
 
 
-    private Companie companie;
+    public static Companie companie;
     private DbConnection dc;
     private ObservableList<Ruta> rutaObservableList;
     private ObservableList<Cursa> cursaObservableList;
@@ -220,7 +220,7 @@ public class CompanieController implements Initializable {
             Connection conn = DbConnection.getConnection();
             assert conn != null;
             companie = creareaCompanie(conn);
-
+            conn.close();
             this.numeCompanie.setText(companie.getNume());
             this.adresaCompanie.setText(companie.getAdresa());
             this.cuiCompanie.setText(companie.getCui());
@@ -246,8 +246,6 @@ public class CompanieController implements Initializable {
 
     }
 
-
-
     public void afiseazaCurse(javafx.event.ActionEvent actionEvent) {
 
         try {
@@ -260,7 +258,7 @@ public class CompanieController implements Initializable {
             this.cursaObservableList = FXCollections.observableArrayList();
 
             for (Cursa cursa : curse) {
-                this.cursaObservableList.add(new Cursa(cursa.getId(), cursa.getTaraIncarcare(), cursa.getOrasIncarcare(), cursa.getOrasDescarcare(),
+                this.cursaObservableList.add(new Cursa(cursa.getId(), cursa.getTaraIncarcare(), cursa.getOrasIncarcare(), cursa.getTaraDescarcare(),
                         cursa.getOrasDescarcare(), cursa.getKm(), cursa.getPret()));
             }
 
@@ -277,7 +275,12 @@ public class CompanieController implements Initializable {
             this.tabelCurse.setItems(this.cursaObservableList);
         }
         catch (RuntimeException ex) {
-            System.out.println("Ruta neselectata");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Avertisment");
+            alert.setHeaderText("Ruta neselectata");
+            alert.setContentText("Va rugam selectati o ruta disponibila!");
+
+            alert.showAndWait();
         }
     }
 
@@ -287,7 +290,7 @@ public class CompanieController implements Initializable {
             if (tab.getText().equalsIgnoreCase("garaj"))
                 ok = false;
         }
-        if (ok)
+        if (ok) {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/Garaj/Garaj.fxml").openStream());
@@ -302,11 +305,20 @@ public class CompanieController implements Initializable {
                 SingleSelectionModel<Tab> selectionModel = tabPan.getSelectionModel();
                 selectionModel.select(tab);
 
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        }
+        else {
+                SingleSelectionModel<Tab> selectionModel = tabPan.getSelectionModel();
+                for (Tab tab : tabPan.getTabs()) {
+                    if (tab.getText().equalsIgnoreCase("garaj")) {
+                        selectionModel.select(tab);
+                        break;
+                    }
 
+                }
+        }
     }
 
     public void mergiLaFlota(ActionEvent actionEvent) {
@@ -333,6 +345,16 @@ public class CompanieController implements Initializable {
             }
             catch (IOException ex) {
                 ex.printStackTrace();
+            }
+        }
+        else {
+            SingleSelectionModel<Tab> selectionModel = tabPan.getSelectionModel();
+            for (Tab tab : tabPan.getTabs()) {
+                if (tab.getText().equalsIgnoreCase("Flota")) {
+                    selectionModel.select(tab);
+                    break;
+                }
+
             }
         }
     }
