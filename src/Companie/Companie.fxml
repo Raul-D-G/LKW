@@ -77,6 +77,11 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
                                  </VBox.margin>
                               </Button>
+                              <Button layoutX="20.0" layoutY="100.0" mnemonicParsing="false" onAction="#mergiLaContabilitate" prefHeight="39.0" prefWidth="315.0" text="CONTABILITATE">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                                 </VBox.margin>
+                              </Button>
                            </children>
                         </VBox>
                         <VBox layoutY="251.0" prefHeight="436.0" prefWidth="1278.0">

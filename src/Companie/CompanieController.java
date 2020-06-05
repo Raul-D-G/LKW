@@ -3,6 +3,7 @@ package Companie;
 import Angajati.Angajat;
 import Angajati.Mecanic;
 import Angajati.Sofer;
+import Contabilitate.ContabilitateController;
 import Flota.Camion;
 import Flota.Flota;
 import Garaj.Garaj;
@@ -227,9 +228,7 @@ public class CompanieController implements Initializable {
 
             this.rutaObservableList = FXCollections.observableArrayList();
 
-            for (Ruta ruta : companie.getRute()) {
-                this.rutaObservableList.add(new Ruta(ruta.getTaraIncarcare(), ruta.getTaraDescarcare(), ruta.getCurse()));
-            }
+            this.rutaObservableList.addAll(companie.getRute());
 
 
         }
@@ -256,10 +255,7 @@ public class CompanieController implements Initializable {
 
             this.cursaObservableList = FXCollections.observableArrayList();
 
-            for (Cursa cursa : curse) {
-                this.cursaObservableList.add(new Cursa(cursa.getId(), cursa.getTaraIncarcare(), cursa.getOrasIncarcare(), cursa.getTaraDescarcare(),
-                        cursa.getOrasDescarcare(), cursa.getKm(), cursa.getPret()));
-            }
+            this.cursaObservableList.addAll(curse);
 
 
             this.idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -366,6 +362,8 @@ public class CompanieController implements Initializable {
 
             Cursa cursa = tabelCurse.getItems().get(row);
             cursaAcceptata = cursa;
+            FlotaController.camionSelectat = null;
+            FlotaController.soferSelectat = null;
 
             cursaObservableList.remove(cursa);
 
@@ -390,5 +388,40 @@ public class CompanieController implements Initializable {
         }
     }
 
+    public void mergiLaContabilitate(ActionEvent actionEvent) {
+        boolean ok = true;
+        for (Tab tab : tabPan.getTabs()) {
+            if (tab.getText().equalsIgnoreCase("contabilitate"))
+                ok = false;
+        }
+        if (ok) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/Contabilitate/Contabilitate.fxml").openStream());
+                Tab tab = new Tab("Contabilitate");
 
+                tab.setContent(root);
+                ContabilitateController contabilitateController = (ContabilitateController) loader.getController();
+
+                tabPan.getTabs().add(tab);
+
+
+                SingleSelectionModel<Tab> selectionModel = tabPan.getSelectionModel();
+                selectionModel.select(tab);
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        else {
+            SingleSelectionModel<Tab> selectionModel = tabPan.getSelectionModel();
+            for (Tab tab : tabPan.getTabs()) {
+                if (tab.getText().equalsIgnoreCase("contabilitate")) {
+                    selectionModel.select(tab);
+                    break;
+                }
+
+            }
+        }
+    }
 }

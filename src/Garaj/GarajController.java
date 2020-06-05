@@ -1,6 +1,7 @@
 package Garaj;
 
 import Angajati.Mecanic;
+import Companie.Companie;
 import Companie.CompanieController;
 import DbUtil.DbConnection;
 import javafx.collections.FXCollections;
@@ -83,11 +84,7 @@ public class GarajController implements Initializable {
 
         this.mecanicObservableList = FXCollections.observableArrayList();
 
-        for (Mecanic mecanic : CompanieController.companie.getGaraj().getMecanici()) {
-
-            this.mecanicObservableList.add(new Mecanic(mecanic.getId(), mecanic.getFunctie(), mecanic.getNume(),
-                    mecanic.getVechime(), mecanic.isDisponibil(), mecanic.getSalariuMecanic()));
-        }
+        this.mecanicObservableList.addAll(CompanieController.companie.getGaraj().getMecanici());
 
         this.colMid.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.colMfunctie.setCellValueFactory(new PropertyValueFactory<>("functie"));
@@ -104,9 +101,7 @@ public class GarajController implements Initializable {
 
         this.piesaObservableList = FXCollections.observableArrayList();
 
-        for (Piesa piesa : CompanieController.companie.getGaraj().getPiese()) {
-            this.piesaObservableList.add(new Piesa(piesa.getId(), piesa.getNume(), piesa.getPret(), piesa.getNumarDePiese()));
-        }
+        this.piesaObservableList.addAll(CompanieController.companie.getGaraj().getPiese());
 
         this.colPid.setCellValueFactory(new PropertyValueFactory<>("id"));
         this.colPnume.setCellValueFactory(new PropertyValueFactory<>("nume"));
