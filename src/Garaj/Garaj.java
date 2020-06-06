@@ -10,18 +10,15 @@ public class Garaj {
 
     private List<Piesa> piese ;
     private List<Mecanic> mecanici;
-    private int cheltuieliGaraj;
 
-    public Garaj(List<Piesa> piese, List<Mecanic> mecanici, int cheltuieliGaraj) {
+    public Garaj(List<Piesa> piese, List<Mecanic> mecanici) {
         this.piese = piese;
         this.mecanici = mecanici;
-        this.cheltuieliGaraj = cheltuieliGaraj;
     }
 
     public Garaj(@NotNull Garaj garaj) {
         this.piese = garaj.piese;
         this.mecanici = garaj.mecanici;
-        this.cheltuieliGaraj = garaj.cheltuieliGaraj;
     }
 
     public List<Piesa> getPiese() {

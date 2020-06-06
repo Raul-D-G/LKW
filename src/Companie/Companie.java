@@ -6,10 +6,8 @@ import Garaj.Garaj;
 import Ruta.Ruta;
 import Ruta.Cursa;
 import Flota.Camion;
-import Servicii.Stergere.StergereCursa;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -18,8 +16,8 @@ public class Companie {
 
     private String nume;
     private String adresa;
-    private int cui;
-    private int IBAN;
+    private String cui;
+    private String IBAN;
 
     private Garaj garaj;
     private List<Ruta> rute;
@@ -27,7 +25,7 @@ public class Companie {
     private Flota flota;
 
 
-    public Companie(String nume, String adresa, int cui, int IBAN, Garaj garaj, List<Ruta> rute, List<Angajat> angajati, Flota flota) {
+    public Companie(String nume, String adresa, String cui, String IBAN, Garaj garaj, List<Ruta> rute, List<Angajat> angajati, Flota flota) {
         this.nume = nume;
         this.adresa = adresa;
         this.cui = cui;
@@ -37,6 +35,8 @@ public class Companie {
         this.angajati = angajati;
         this.flota = new Flota(flota);
     }
+
+
 
     public void adaugaRuta(Ruta ruta) {
         rute.add(ruta);
@@ -52,11 +52,11 @@ public class Companie {
         return adresa;
     }
 
-    public int getCui() {
+    public String getCui() {
         return cui;
     }
 
-    public int getIBAN() {
+    public String getIBAN() {
         return IBAN;
     }
 
@@ -105,44 +105,8 @@ public class Companie {
         return null;
     }
 
-//    Afiseaza cursele disponibile pentru o ruta si returneaza cursa selectata
-    public Cursa cautaCurse(@NotNull Ruta ruta) {
-        int ok = 0;
-        for (Cursa cursa : ruta.getCurse()) {
-            ok = 1;
-            System.out.println(cursa);
-        }
-        if (ok == 0) {
-            System.out.println("Nu sunt curse disponibile!\n");
-        }
 
-        System.out.println("\nIntroduceti id-ul cursei:\n");
-        Scanner scanner = new Scanner(System.in);
-        boolean validInput = false;
-
-        while (!validInput) {
-            try {
-
-                int idCursa = scanner.nextInt();
-
-                Cursa cursa = selectCursa(ruta, idCursa);
-
-                if (cursa == null)
-                    throw new InputMismatchException("Id-ul nu exista!");
-                else {
-                    validInput = true;
-                    System.out.println("Cursa a fost selectata!");
-                    return cursa;
-                }
-            }
-            catch (InputMismatchException e) {
-                System.out.println("Id-ul nu exista!");
-            }
-        }
-        return null;
-    }
-
-//    Afiseaza toate camioanele disponibile si returneaza camionul
+    //    Afiseaza toate camioanele disponibile si returneaza camionul
 //    selectat dupa nr de imatriculare.
     public Camion cautaCamionDisponibil() {
         int ok = 0;
@@ -182,24 +146,7 @@ public class Companie {
         return null;
     }
 
-//    Returneaza profitul obtinut in urma cursei acceptate
-//    Sterge cursa acceptata din fiserul csv
-//    Seteaza camionul selecata indisponibil.
-    public double acceptaCursa(@NotNull Cursa cursa, @NotNull Camion camion) {
-        double profit;
-        int pretCursa = cursa.getPret();
-        double consumCamion = camion.getConsumPeKm();
-        int km = cursa.getKm();
-        double cheltuieli = km * consumCamion / 100;
 
-        profit = pretCursa - cheltuieli;
-
-        StergereCursa.stergereCursa(Integer.toString(cursa.getId()), cursa.getId());
-
-        camion.setDisponibil(false);
-
-        return  profit;
-    }
 
     //    Calculeaza cheltuielile din garaj + salariul soferilor
     public int cheltuieliGarajplusSoferi() {
@@ -209,16 +156,8 @@ public class Companie {
         return cheltuieli;
     }
 
-//    Returneaza cursa selectata
-    protected Cursa selectCursa(@NotNull Ruta ruta, int id) {
-        for (Cursa cursa : ruta.getCurse()) {
-            if (cursa.getId() == id)
-                return cursa;
-        }
-        return null;
-    }
 
-//    Returneaza camionul selectat
+    //    Returneaza camionul selectat
     protected Camion selectCamion(String nr) {
         for (Camion camion : flota.getCamioane()) {
             if (camion.getNumarImatriculare().equalsIgnoreCase(nr))

@@ -1,97 +1,130 @@
 package Ruta;
 
+import javafx.beans.property.*;
 import org.jetbrains.annotations.NotNull;
 
 public class Cursa {
 
-    private int id;
-    private String tara_incarcare;
-    private String oras_incarcare;
-    private String tara_descarcare;
-    private String oras_descarcare;
-    private int km;
-    private int pret;
+    private final IntegerProperty id;
+    private final StringProperty taraIncarcare;
+    private final StringProperty orasIncarcare;
+    private final StringProperty taraDescarcare;
+    private final StringProperty orasDescarcare;
+    private final IntegerProperty km;
+    private final DoubleProperty pret;
 
-    public Cursa(int id, String tara_incarcare, String oras_incarcare, String tara_descarcare, String oras_descarcare, int km, int pret) {
-        this.id = id;
-        this.tara_incarcare = tara_incarcare;
-        this.oras_incarcare = oras_incarcare;
-        this.tara_descarcare = tara_descarcare;
-        this.oras_descarcare = oras_descarcare;
-        this.km = km;
-        this.pret = pret;
+    public Cursa(int id, String taraIncarcare, String orasIncarcare, String taraDescarcare, String orasDescarcare, int km, double pret) {
+        this.id = new SimpleIntegerProperty(id);
+        this.taraIncarcare = new SimpleStringProperty(taraIncarcare);
+        this.orasIncarcare = new SimpleStringProperty(orasIncarcare);
+        this.taraDescarcare = new SimpleStringProperty(taraDescarcare);
+        this.orasDescarcare = new SimpleStringProperty(orasDescarcare);
+        this.km = new SimpleIntegerProperty(km);
+        this.pret = new SimpleDoubleProperty(pret);
     }
 
     public Cursa(@NotNull Cursa cursa) {
         this.id = cursa.id;
-        this.tara_incarcare = cursa.tara_incarcare;
-        this.oras_incarcare = cursa.oras_incarcare;
-        this.tara_descarcare = cursa.tara_descarcare;
-        this.oras_descarcare = cursa.oras_descarcare;
+        this.taraIncarcare = cursa.taraIncarcare;
+        this.orasIncarcare = cursa.orasIncarcare;
+        this.taraDescarcare = cursa.taraDescarcare;
+        this.orasDescarcare = cursa.orasDescarcare;
         this.pret = cursa.pret;
         this.km = cursa.km;
     }
 
     public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public String getTara_incarcare() {
-        return tara_incarcare;
+    public void setId(int id) {
+        this.id.set(id);
     }
 
-    public void setTara_incarcare(String tara_incarcare) {
-        this.tara_incarcare = tara_incarcare;
+    public String getTaraIncarcare() {
+        return taraIncarcare.get();
     }
 
-    public String getOras_incarcare() {
-        return oras_incarcare;
+    public StringProperty taraIncarcareProperty() {
+        return taraIncarcare;
     }
 
-    public void setOras_incarcare(String oras_incarcare) {
-        this.oras_incarcare = oras_incarcare;
+    public void setTaraIncarcare(String taraIncarcare) {
+        this.taraIncarcare.set(taraIncarcare);
     }
 
-    public String getTara_descarcare() {
-        return tara_descarcare;
+    public String getOrasIncarcare() {
+        return orasIncarcare.get();
     }
 
-    public void setTara_descarcare(String tara_descarcare) {
-        this.tara_descarcare = tara_descarcare;
+    public StringProperty orasIncarcareProperty() {
+        return orasIncarcare;
     }
 
-    public String getOras_descarcare() {
-        return oras_descarcare;
+    public void setOrasIncarcare(String orasIncarcare) {
+        this.orasIncarcare.set(orasIncarcare);
     }
 
-    public void setOras_descarcare(String oras_descarcare) {
-        this.oras_descarcare = oras_descarcare;
+    public String getTaraDescarcare() {
+        return taraDescarcare.get();
+    }
+
+    public StringProperty taraDescarcareProperty() {
+        return taraDescarcare;
+    }
+
+    public void setTaraDescarcare(String taraDescarcare) {
+        this.taraDescarcare.set(taraDescarcare);
+    }
+
+    public String getOrasDescarcare() {
+        return orasDescarcare.get();
+    }
+
+    public StringProperty orasDescarcareProperty() {
+        return orasDescarcare;
+    }
+
+    public void setOrasDescarcare(String orasDescarcare) {
+        this.orasDescarcare.set(orasDescarcare);
     }
 
     public int getKm() {
+        return km.get();
+    }
+
+    public IntegerProperty kmProperty() {
         return km;
     }
 
     public void setKm(int km) {
-        this.km = km;
+        this.km.set(km);
     }
 
-    public int getPret() {
+    public double getPret() {
+        return pret.get();
+    }
+
+    public DoubleProperty pretProperty() {
         return pret;
     }
 
-    public void setPret(int pret) {
-        this.pret = pret;
+    public void setPret(double pret) {
+        this.pret.set(pret);
     }
 
     @Override
     public String toString() {
         return "Cursa{" +
                 "id=" + id +
-                ", tara_incarcare='" + tara_incarcare + '\'' +
-                ", oras_incarcare='" + oras_incarcare + '\'' +
-                ", tara_descarcare='" + tara_descarcare + '\'' +
-                ", oras_descarcare='" + oras_descarcare + '\'' +
+                ", tara_incarcare='" + taraIncarcare + '\'' +
+                ", oras_incarcare='" + orasIncarcare + '\'' +
+                ", tara_descarcare='" + taraDescarcare + '\'' +
+                ", oras_descarcare='" + orasDescarcare + '\'' +
                 ", " + km +" de km" +
                 ", pret= " + pret + " euro" +
                 '}';
