@@ -1,6 +1,7 @@
 package LoginApp;
 
 import Companie.CompanieController;
+import Inregistrare.InregistrareController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +33,8 @@ public class LoginController implements Initializable {
     @FXML
     private Label loginStatus;
 
+    public static int idCompanie;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -47,7 +50,7 @@ public class LoginController implements Initializable {
     public void Login(ActionEvent event) {
         try {
 
-            if (this.loginModel.isLogin(this.username.getText(), this.password.getText() ) ) {
+            if (this.loginModel.isLogin(this.username.getText(), this.password.getText()) ) {
                 Stage stage = (Stage) this.loginButton.getScene().getWindow();
                 stage.close();
                 companieTransportLogin();
@@ -82,4 +85,26 @@ public class LoginController implements Initializable {
         }
     }
 
+    public void inregistrare(ActionEvent actionEvent) {
+        Stage stage = (Stage) this.loginButton.getScene().getWindow();
+        stage.close();
+
+        try {
+            Stage userStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Pane root = (Pane)loader.load(getClass().getResource("/Inregistrare/Inregistrare.fxml").openStream());
+
+            InregistrareController inregistrareController = (InregistrareController) loader.getController();
+
+            Scene scene = new Scene(root);
+            userStage.setScene(scene);
+            userStage.setTitle("Inregistrare");
+            userStage.setResizable(false);
+            userStage.show();
+
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

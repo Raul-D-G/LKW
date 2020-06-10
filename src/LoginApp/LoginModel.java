@@ -41,6 +41,7 @@ public class LoginModel {
             pr.setString(2,password);
 
             rs = pr.executeQuery();
+            LoginController.idCompanie = rs.getInt(1);
             return rs.next();
         }
         catch (SQLException e) {

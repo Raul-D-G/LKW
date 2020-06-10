@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Inregistrare.InregistrareController">
+   <children>
+      <HBox prefHeight="727.0" prefWidth="1280.0">
+         <children>
+            <VBox prefHeight="720.0" prefWidth="640.0">
+               <children>
+                  <Button fx:id="buton" mnemonicParsing="false" onAction="#inregistrare" prefHeight="64.0" prefWidth="313.0" text="Inregistrare">
+                     <VBox.margin>
+                        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <ImageView fx:id="img" fitHeight="520.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="720.0" prefWidth="640.0">
+               <children>
+                  <TextField fx:id="nume" prefHeight="40.0" prefWidth="542.0" promptText="Nume">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="50.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="adresa" prefHeight="40.0" prefWidth="542.0" promptText="Adresa">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="cui" prefHeight="40.0" prefWidth="542.0" promptText="CUI">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="iban" prefHeight="40.0" prefWidth="542.0" promptText="IBAN">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label alignment="CENTER" prefHeight="36.0" prefWidth="380.0" text="Conectare">
+                     <VBox.margin>
+                        <Insets bottom="30.0" left="50.0" right="30.0" top="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="numeUtilizator" prefHeight="40.0" prefWidth="542.0" promptText="Nume utilizator">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="parola" prefHeight="40.0" prefWidth="542.0" promptText="Parola">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

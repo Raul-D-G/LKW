@@ -1,8 +1,6 @@
 package Flota;
 
-import Angajati.Mecanic;
 import Angajati.Sofer;
-import Companie.Companie;
 import Companie.CompanieController;
 import DbUtil.DbConnection;
 import Ruta.Cursa;
@@ -22,7 +20,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 
 public class FlotaController implements Initializable {
@@ -436,18 +433,17 @@ public class FlotaController implements Initializable {
                 stmt.setString(4, sofer.getNume());
                 stmt.setString(5, String.valueOf(profit));
 
-                this.camionSelectat = null;
-                this.soferSelectat = null;
+                camionSelectat = null;
+                soferSelectat = null;
                 CompanieController.cursaAcceptata = null;
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Informatie");
                 alert.setHeaderText(null);
                 alert.setContentText("Cursa a fost inregistrata in contabilitate!");
-
                 alert.showAndWait();
 
-                System.out.println(profit);
+
 
                 stmt.executeUpdate();
                 conn.close();
