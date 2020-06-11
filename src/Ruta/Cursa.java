@@ -1,7 +1,6 @@
 package Ruta;
 
 import javafx.beans.property.*;
-import org.jetbrains.annotations.NotNull;
 
 public class Cursa {
 
@@ -23,7 +22,7 @@ public class Cursa {
         this.pret = new SimpleDoubleProperty(pret);
     }
 
-    public Cursa(@NotNull Cursa cursa) {
+    public Cursa(Cursa cursa) {
         this.id = cursa.id;
         this.taraIncarcare = cursa.taraIncarcare;
         this.orasIncarcare = cursa.orasIncarcare;
