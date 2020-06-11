@@ -8,6 +8,7 @@ import Flota.Camion;
 import Flota.Flota;
 import Garaj.Garaj;
 import Garaj.Piesa;
+import LoginApp.LoginController;
 import Ruta.Ruta;
 import Ruta.Cursa;
 import Garaj.GarajController;
@@ -76,20 +77,27 @@ public class CompanieController implements Initializable {
     @FXML
     private TableColumn<Cursa, Double> pretcol;
 
+    @FXML
+    private TextField taraIncarcareForm;
+    @FXML
+    private TextField taraDescarcareForm;
+
 
     public static Companie companie;
     public static Cursa cursaAcceptata = null;
+
     private DbConnection dc;
     private ObservableList<Ruta> rutaObservableList;
     private ObservableList<Cursa> cursaObservableList;
+    private List<Cursa> curse = new ArrayList<>();
 
-    Companie creareaCompanie(Connection conn) {
-        String sql1 = "SELECT * FROM Companie";
-        String sql2 = "SELECT * FROM Piese";
-        String sql3 = "SELECT * FROM Angajati";
+    Companie creareaCompanie(Connection conn, int idCompanie ) {
+        String sql1 = "SELECT * FROM Companie WHERE Id = ?";
+        String sql2 = "SELECT * FROM Piese WHERE IdCompanie = ?";
+        String sql3 = "SELECT * FROM Angajati WHERE IdCompanie = ?";
         String sql4 = "SELECT * FROM Curse";
-        String sql5 = "SELECT * FROM Camioane";
-
+        String sql5 = "SELECT * FROM Camioane WHERE IdCompanie = ?";
+        String sqlRute = "SELECT * FROM Rute WHERE IdCompanie = ?";
 
         String nume, adresa, cui, iban, numePiesa, functie, numeAngajat, tarai, orasi, tarad, orasd, nrCamion, marca;
         int pretPiesa, numarDePiese, idpiesa, idangajat, vechime, idCursa, km, idCamion, consum;
@@ -101,7 +109,6 @@ public class CompanieController implements Initializable {
         List<Mecanic> mecanici = new ArrayList<>();
         List<Sofer> soferi = new ArrayList<>();
         List<Ruta> rute = new ArrayList<>();
-        List<Cursa> curse = new ArrayList<>();
         List<Camion> camioane = new ArrayList<>();
 
         PreparedStatement pr;
@@ -111,6 +118,7 @@ public class CompanieController implements Initializable {
 
 //          Piese
             pr = conn.prepareStatement(sql2);
+            pr.setInt(1,idCompanie);
             rs = pr.executeQuery();
             while (rs.next()) {
                 idpiesa = rs.getInt(1);
@@ -121,9 +129,9 @@ public class CompanieController implements Initializable {
                 piese.add(p);
             }
 
-
 //            Angajati
             pr = conn.prepareStatement(sql3);
+            pr.setInt(1,idCompanie);
             rs = pr.executeQuery();
             while (rs.next()) {
                 idangajat = rs.getInt(1);
@@ -143,7 +151,6 @@ public class CompanieController implements Initializable {
                     angajati.add(mecanic);
                 }
             }
-
 
             Garaj garaj = new Garaj(piese, mecanici);
 
@@ -165,6 +172,7 @@ public class CompanieController implements Initializable {
 
 //            Camioane
             pr = conn.prepareStatement(sql5);
+            pr.setInt(1,idCompanie);
             rs = pr.executeQuery();
             while (rs.next()) {
                 idCamion = rs.getInt(1);
@@ -176,33 +184,35 @@ public class CompanieController implements Initializable {
                 camioane.add(camion);
             }
 
-            List<Cursa> curseRuta1 = new ArrayList<>();
-            List<Cursa> curseRuta2 = new ArrayList<>();
-            Ruta ruta1 = new Ruta("Romania", "Grecia", curseRuta1);
-            Ruta ruta2 = new Ruta("Grecia", "Romania", curseRuta2);
+//            Rute
+            pr = conn.prepareStatement(sqlRute);
+            pr.setInt(1,idCompanie);
+            rs = pr.executeQuery();
+            while (rs.next()) {
+                List<Cursa> curse1 = new ArrayList<Cursa>();
+                Ruta ruta = new Ruta (rs.getString(2), rs.getString(3), curse1);
 
-            for (Cursa cursa : curse) {
-                if (cursa.getTaraIncarcare().equals("Romania") && cursa.getTaraDescarcare().equals("Grecia")) {
-                    ruta1.adaugaCursa(cursa);
+                for (Cursa cursa : curse) {
+                    if (cursa.getTaraIncarcare().equals(rs.getString(2)) && cursa.getTaraDescarcare().equals(rs.getString(3))) {
+                        ruta.adaugaCursa(cursa);
+                    }
                 }
-                else {
-                    ruta2.adaugaCursa(cursa);
-                }
+                rute.add(ruta);
+
             }
-            rute.add(ruta1); rute.add(ruta2);
 
 
             Flota flota = new Flota(camioane, soferi);
 
-
 //            Date Companie
             pr = conn.prepareStatement(sql1);
+            pr.setInt(1, idCompanie);
             rs = pr.executeQuery();
             if (rs.next()) {
-                nume = rs.getString(1);
-                adresa = rs.getString(2);
-                cui = rs.getString(3);
-                iban = rs.getString(4);
+                nume = rs.getString(2);
+                adresa = rs.getString(3);
+                cui = rs.getString(4);
+                iban = rs.getString(5);
                 return new Companie(nume, adresa, cui, iban, garaj, rute, angajati, flota);
             }
         }
@@ -219,7 +229,7 @@ public class CompanieController implements Initializable {
         try {
             Connection conn = DbConnection.getConnection();
             assert conn != null;
-            companie = creareaCompanie(conn);
+            companie = creareaCompanie(conn, LoginController.idCompanie);
             conn.close();
             this.numeCompanie.setText(companie.getNume());
             this.adresaCompanie.setText(companie.getAdresa());
@@ -233,7 +243,10 @@ public class CompanieController implements Initializable {
 
         }
         catch (SQLException e) {
-            System.err.println("Eroare " + e);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Avertisment");
+            alert.setHeaderText("Campuri necompletate");
+            alert.setContentText("Va rugam completati toate campurile!");
         }
 
 
@@ -250,24 +263,34 @@ public class CompanieController implements Initializable {
             TablePosition pos = tabelRute.getSelectionModel().getSelectedCells().get(0);
             int row = pos.getRow();
 
-            Ruta item = tabelRute.getItems().get(row);
-            List<Cursa> curse = item.getCurse();
+            Ruta ruta = tabelRute.getItems().get(row);
+            List<Cursa> curse = ruta.getCurse();
 
-            this.cursaObservableList = FXCollections.observableArrayList();
+            if (!curse.isEmpty()) {
+                this.cursaObservableList = FXCollections.observableArrayList();
 
-            this.cursaObservableList.addAll(curse);
+                this.cursaObservableList.addAll(curse);
 
 
-            this.idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
-            this.incarcareTcol.setCellValueFactory(new PropertyValueFactory<>("taraIncarcare"));
-            this.incarcareOcol.setCellValueFactory(new PropertyValueFactory<>("orasIncarcare"));
-            this.descarcareTcol.setCellValueFactory(new PropertyValueFactory<>("taraDescarcare"));
-            this.DescarcareOcol.setCellValueFactory(new PropertyValueFactory<>("orasDescarcare"));
-            this.kmcol.setCellValueFactory(new PropertyValueFactory<>("km"));
-            this.pretcol.setCellValueFactory(new PropertyValueFactory<>("pret"));
+                this.idcol.setCellValueFactory(new PropertyValueFactory<>("id"));
+                this.incarcareTcol.setCellValueFactory(new PropertyValueFactory<>("taraIncarcare"));
+                this.incarcareOcol.setCellValueFactory(new PropertyValueFactory<>("orasIncarcare"));
+                this.descarcareTcol.setCellValueFactory(new PropertyValueFactory<>("taraDescarcare"));
+                this.DescarcareOcol.setCellValueFactory(new PropertyValueFactory<>("orasDescarcare"));
+                this.kmcol.setCellValueFactory(new PropertyValueFactory<>("km"));
+                this.pretcol.setCellValueFactory(new PropertyValueFactory<>("pret"));
 
-            this.tabelCurse.setItems(null);
-            this.tabelCurse.setItems(this.cursaObservableList);
+                this.tabelCurse.setItems(null);
+                this.tabelCurse.setItems(this.cursaObservableList);
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Informatie");
+                alert.setHeaderText(null);
+                alert.setContentText("Nu sunt curse disponibile pentru ruta selectata!");
+                alert.showAndWait();
+            }
+
         }
         catch (RuntimeException ex) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -423,5 +446,72 @@ public class CompanieController implements Initializable {
 
             }
         }
+    }
+
+    public void adaugaRuta(ActionEvent actionEvent) {
+
+        String sql = "INSERT INTO Rute(IdCompanie, TaraIncarcare, TaraDescarcare) VALUES(?,?,?)";
+        boolean ok = true;
+
+
+        try {
+            String taraIncarcare = taraIncarcareForm.getText();
+            String taraDescarcare = taraDescarcareForm.getText();
+
+            if (taraIncarcare.equals("") || taraDescarcare.equals("")) {
+                ok = false;
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Avertisment");
+                alert.setHeaderText("Campuri necompletate");
+                alert.setContentText("Va rugam completati toate campurile!");
+                alert.showAndWait();
+            }
+            else {
+                List<Cursa> curse = new ArrayList<Cursa>();
+                Ruta ruta = new Ruta(taraIncarcare, taraDescarcare, curse);
+                for (Cursa cursa : this.curse) {
+                    if (cursa.getTaraIncarcare().equals(taraIncarcare) && cursa.getTaraDescarcare().equals(taraDescarcare))
+                    {
+                        ruta.adaugaCursa(cursa);
+                    }
+                }
+                companie.getRute().add(ruta);
+                rutaObservableList.add(ruta);
+            }
+        }
+
+        catch (RuntimeException e) {
+            ok = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Avertisment");
+            alert.setHeaderText("Campuri necompletate");
+            alert.setContentText("Va rugam completati toate campurile!");
+
+            alert.showAndWait();
+        }
+        if (ok) {
+            try {
+                Connection conn = DbConnection.getConnection();
+                assert conn != null;
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+                stmt.setInt(1, LoginController.idCompanie);
+                stmt.setString(3, taraDescarcareForm.getText());
+                stmt.setString(2, taraIncarcareForm.getText());
+                taraDescarcareForm.setText("");
+                taraIncarcareForm.setText("");
+
+                stmt.execute();
+                conn.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+
+
     }
 }

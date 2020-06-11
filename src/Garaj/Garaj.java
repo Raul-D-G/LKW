@@ -1,9 +1,6 @@
 package Garaj;
 
 import Angajati.Mecanic;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 import java.util.List;
 
 public class Garaj {
@@ -16,7 +13,7 @@ public class Garaj {
         this.mecanici = mecanici;
     }
 
-    public Garaj(@NotNull Garaj garaj) {
+    public Garaj(Garaj garaj) {
         this.piese = garaj.piese;
         this.mecanici = garaj.mecanici;
     }

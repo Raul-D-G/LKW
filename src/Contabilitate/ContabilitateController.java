@@ -1,6 +1,7 @@
 package Contabilitate;
 
 import DbUtil.DbConnection;
+import LoginApp.LoginController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,12 +33,9 @@ public class ContabilitateController implements Initializable {
     private TableColumn<Contabilitate, Double> colProfit;
 
 
-
-    private ObservableList<Contabilitate> contabilitateObservableList;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String sql = "SELECT * FROM Contabilitate";
+        String sql = "SELECT * FROM Contabilitate WHERE IdCompanie = ?";
         DbConnection dc = new DbConnection();
         int id;
         String cursa, camion, sofer;
@@ -47,8 +45,10 @@ public class ContabilitateController implements Initializable {
             Connection conn = DbConnection.getConnection();
             assert conn != null;
             PreparedStatement pr = conn.prepareStatement(sql);
+            pr.setInt(1,LoginController.idCompanie);
             ResultSet rs = pr.executeQuery();
-            this.contabilitateObservableList = FXCollections.observableArrayList();
+
+            ObservableList<Contabilitate> contabilitateObservableList = FXCollections.observableArrayList();
 
             while (rs.next()) {
                 id = rs.getInt(1);
@@ -58,7 +58,7 @@ public class ContabilitateController implements Initializable {
                 profit = rs.getDouble(5);
 
                 Contabilitate cont = new Contabilitate(id, cursa, camion, sofer, profit);
-                this.contabilitateObservableList.add(cont);
+                contabilitateObservableList.add(cont);
             }
 
             this.colId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -68,7 +68,7 @@ public class ContabilitateController implements Initializable {
             this.colProfit.setCellValueFactory(new PropertyValueFactory<>("profit"));
 
             this.tabelContabilitate.setItems(null);
-            this.tabelContabilitate.setItems(this.contabilitateObservableList);
+            this.tabelContabilitate.setItems(contabilitateObservableList);
             conn.close();
 
         }

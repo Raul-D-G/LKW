@@ -1,10 +1,9 @@
 package Flota;
 
-import Angajati.Mecanic;
 import Angajati.Sofer;
-import Companie.Companie;
 import Companie.CompanieController;
 import DbUtil.DbConnection;
+import LoginApp.LoginController;
 import Ruta.Cursa;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +21,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 
 public class FlotaController implements Initializable {
@@ -143,7 +141,7 @@ public class FlotaController implements Initializable {
     }
 
     public void adaugaCamion(ActionEvent actionEvent) {
-        String sql = "INSERT INTO Camioane(Id, Nr, Marca, Disponibil, Consum) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Camioane(Id, Nr, Marca, Disponibil, Consum, IdCompanie) VALUES(?,?,?,?,?,?)";
         boolean ok = true;
 
         try {
@@ -152,6 +150,7 @@ public class FlotaController implements Initializable {
             CompanieController.companie.getFlota().adaugaCamion(camionNou);
 
             this.camionObservableList.add(camionNou);
+
         }
         catch (RuntimeException e) {
             ok = false;
@@ -173,6 +172,7 @@ public class FlotaController implements Initializable {
                 stmt.setString(3, this.marcaCamion.getText());
                 stmt.setString(4, this.disponibilCamion.getText());
                 stmt.setString(5, this.consumCamion.getText());
+                stmt.setInt(6, LoginController.idCompanie);
 
                 stmt.execute();
                 conn.close();
@@ -310,14 +310,14 @@ public class FlotaController implements Initializable {
 
     public void adaugaSofer(ActionEvent actionEvent) {
 
-        String sql = "INSERT INTO Angajati(Id,Functie, Nume,Vechime, Disponibil, Salariu) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO Angajati(Id,Functie, Nume,Vechime, Disponibil, Salariu, IdCompanie) VALUES(?,?,?,?,?,?,?)";
         boolean ok = true;
 
         try {
             Sofer soferNou = new Sofer(Integer.parseInt(this.idSofer.getText()), this.functieSofer.getText(), this.numeSofer.getText(),
                     Integer.parseInt(this.vechimeSofer.getText()), Boolean.parseBoolean(this.disponibilSofer.getText()), Double.parseDouble(this.salariuSofer.getText()));
             CompanieController.companie.getFlota().adaugaSofer(soferNou);
-
+            CompanieController.companie.adaugaAngajat(soferNou);
             this.soferObservableList.add(soferNou);
         }
         catch (RuntimeException e) {
@@ -341,6 +341,7 @@ public class FlotaController implements Initializable {
                 stmt.setString(4, this.vechimeSofer.getText());
                 stmt.setString(5, this.disponibilSofer.getText());
                 stmt.setString(6, this.salariuSofer.getText());
+                stmt.setInt(7, LoginController.idCompanie);
 
                 stmt.execute();
                 conn.close();
@@ -369,7 +370,7 @@ public class FlotaController implements Initializable {
             soferObservableList.remove(sofer);
             CompanieController.companie.getFlota().getSoferi().remove(sofer);
 
-            String sql = "DELETE FROM Angajati WHERE ID = ?";
+            String sql = "DELETE FROM Angajati WHERE ID = ? AND IdCompanie = ?";
 
             try {
                 Connection conn = DbConnection.getConnection();
@@ -377,7 +378,7 @@ public class FlotaController implements Initializable {
                 PreparedStatement stmt = conn.prepareStatement(sql);
 
                 stmt.setString(1, String.valueOf(sofer.getId()));
-
+                stmt.setInt(2,LoginController.idCompanie);
                 stmt.execute();
                 conn.close();
             }
@@ -389,10 +390,10 @@ public class FlotaController implements Initializable {
 
     public void cursa(ActionEvent actionEvent) {
 
-        String sql = "INSERT INTO Contabilitate(Id, NumeCursa, Camion, Sofer, Profit) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Contabilitate(Id, NumeCursa, Camion, Sofer, Profit, IdCompanie) VALUES(?, ?, ?, ?, ?,?)";
         Cursa cursa = CompanieController.cursaAcceptata;
-        Sofer sofer = this.soferSelectat;
-        Camion camion = this.camionSelectat;
+        Sofer sofer = soferSelectat;
+        Camion camion = camionSelectat;
 
         if (cursa == null) {
             this.preiaCursa.setVisible(false);
@@ -435,19 +436,19 @@ public class FlotaController implements Initializable {
                 stmt.setString(3, camion.getNumarImatriculare());
                 stmt.setString(4, sofer.getNume());
                 stmt.setString(5, String.valueOf(profit));
+                stmt.setInt(6, LoginController.idCompanie);
 
-                this.camionSelectat = null;
-                this.soferSelectat = null;
+                camionSelectat = null;
+                soferSelectat = null;
                 CompanieController.cursaAcceptata = null;
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Informatie");
                 alert.setHeaderText(null);
                 alert.setContentText("Cursa a fost inregistrata in contabilitate!");
-
                 alert.showAndWait();
 
-                System.out.println(profit);
+
 
                 stmt.executeUpdate();
                 conn.close();

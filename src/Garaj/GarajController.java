@@ -4,6 +4,7 @@ import Angajati.Mecanic;
 import Companie.Companie;
 import Companie.CompanieController;
 import DbUtil.DbConnection;
+import LoginApp.LoginController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -181,14 +182,14 @@ public class GarajController implements Initializable {
     }
 
     public void adaugaMecanic(ActionEvent actionEvent) {
-        String sql = "INSERT INTO Angajati(Id,Functie, Nume,Vechime, Disponibil, Salariu) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO Angajati(Id,Functie, Nume,Vechime, Disponibil, Salariu, IdCompanie) VALUES(?,?,?,?,?,?,?)";
         boolean ok = true;
 
         try {
             Mecanic mecanicNou = new Mecanic(Integer.parseInt(this.idMecanic.getText()), this.functieMecanic.getText(), this.numeMecanic.getText(),
                     Integer.parseInt(this.vechimeMecanic.getText()), Boolean.parseBoolean(this.disponibilMecanic.getText()), Double.parseDouble(this.salariuMecanic.getText()));
             CompanieController.companie.getGaraj().adaugaMecanic(mecanicNou);
-
+            CompanieController.companie.adaugaAngajat(mecanicNou);
             this.mecanicObservableList.add(mecanicNou);
         }
         catch (RuntimeException e) {
@@ -212,6 +213,7 @@ public class GarajController implements Initializable {
                 stmt.setString(4, this.vechimeMecanic.getText());
                 stmt.setString(5, this.disponibilMecanic.getText());
                 stmt.setString(6, this.salariuMecanic.getText());
+                stmt.setInt(7, LoginController.idCompanie);
 
                 stmt.execute();
                 conn.close();
@@ -275,7 +277,7 @@ public class GarajController implements Initializable {
     }
 
     public void adaugaPiesa(ActionEvent actionEvent) {
-        String sql = "INSERT INTO Piese(Id,Nume,Pret, Nrpiese) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO Piese(Id,Nume,Pret, Nrpiese, IdCompanie) VALUES(?,?,?,?,?)";
         boolean ok = true;
 
 
@@ -305,6 +307,7 @@ public class GarajController implements Initializable {
                 stmt.setString(2, this.numePiesa.getText());
                 stmt.setString(3, this.pretPiesa.getText());
                 stmt.setString(4, this.nrPiesa.getText());
+                stmt.setInt(5,LoginController.idCompanie);
 
                 stmt.execute();
                 conn.close();
