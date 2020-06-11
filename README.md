@@ -3,4 +3,4 @@
 
 [Diagrama clase](Class.pdf)
 
-[Diagrama clase control](Controoller%20Class.pdf)
+[Diagrama clase control](Controller%20Class.pdf)
